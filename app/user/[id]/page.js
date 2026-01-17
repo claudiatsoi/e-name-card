@@ -91,17 +91,6 @@ export default async function UserCard({ params }) {
                                         fgColor="#121517"
                                     />
                                 </div>
-                                {avatar && (
-                                    <div className="relative w-14 h-14 rounded-full overflow-hidden border-2 border-primary/10">
-                                        <Image 
-                                            src={avatar}
-                                            alt={name}
-                                            fill
-                                            className="object-cover"
-                                            unoptimized
-                                        />
-                                    </div>
-                                )}
                             </div>
                         </div>
 
@@ -110,6 +99,20 @@ export default async function UserCard({ params }) {
                                 <p className="text-[#657b86] text-sm leading-relaxed whitespace-pre-wrap italic">
                                     "{bio}"
                                 </p>
+                            </div>
+                        )}
+                        
+                        {avatar && (
+                            <div className="flex w-full justify-end -mt-4 mb-2">
+                                <div className="relative w-24 h-24 rounded-full overflow-hidden border-4 border-white shadow-lg">
+                                    <Image 
+                                        src={avatar}
+                                        alt={name}
+                                        fill
+                                        className="object-cover"
+                                        unoptimized
+                                    />
+                                </div>
                             </div>
                         )}
                         
