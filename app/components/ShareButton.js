@@ -83,39 +83,16 @@ export default function ShareButton({ title, text, url, className, variant, card
                 </div>
 
                 {/* Additional Action Grid */}
-                 <div className="grid grid-cols-3 gap-3 w-full">
-                    {/* Add to Apple Wallet */}
-                    <button 
-                      onClick={() => alert('Apple Wallet integration requires a backend pass generator service.')} 
-                      className="flex flex-col items-center justify-center gap-2 p-3 rounded-lg hover:bg-black/5 dark:hover:bg-white/5 transition-colors group"
-                    >
-                        <div className="w-10 h-10 rounded-full bg-black text-white flex items-center justify-center shadow-sm group-hover:scale-105 transition-transform">
-                             <span className="material-symbols-outlined text-[20px]">wallet</span>
-                        </div>
-                        <span className="text-[10px] text-center font-medium leading-tight text-[#657b86]">Apple Wallet</span>
-                    </button>
-
-                     {/* Add to Google Wallet */}
-                    <button 
-                       onClick={() => alert('Google Wallet integration requires a backend pass generator service.')}
-                       className="flex flex-col items-center justify-center gap-2 p-3 rounded-lg hover:bg-black/5 dark:hover:bg-white/5 transition-colors group"
-                    >
-                        <div className="w-10 h-10 rounded-full bg-white border border-gray-200 text-[#121517] flex items-center justify-center shadow-sm group-hover:scale-105 transition-transform">
-                             <span className="material-symbols-outlined text-[20px]">account_balance_wallet</span>
-                        </div>
-                        <span className="text-[10px] text-center font-medium leading-tight text-[#657b86]">Google Wallet</span>
-                    </button>
-
-                    {/* Save Image */}
+                 <div className="flex w-full justify-center">
+                    {/* Save Image - Centered and Larger */}
                     <button 
                        onClick={handleSaveImage}
-                       className="flex flex-col items-center justify-center gap-2 p-3 rounded-lg hover:bg-black/5 dark:hover:bg-white/5 transition-colors group"
+                       className="flex flex-col items-center justify-center gap-2 p-3 rounded-lg hover:bg-black/5 dark:hover:bg-white/5 transition-colors group w-1/3"
                     >
-                        <div className="w-10 h-10 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center shadow-sm group-hover:scale-105 transition-transform">
-                             <span className="material-symbols-outlined text-[20px]">{savingImage ? 'downloading' : 'image'}</span>
+                        <div className="w-12 h-12 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center shadow-lg group-hover:scale-105 transition-transform">
+                             <span className="material-symbols-outlined text-[24px]">{savingImage ? 'downloading' : 'image'}</span>
                         </div>
-                        <span className="text-[10px] text-center font-medium leading-tight text-[#657b86]">Save Image</span>
-                    </button>
+                        <span className="text-[11px] text-center font-bold text-[#657b86]">Save to Album</span>
                  </div>
 
                 <div className="w-full pt-4 border-t border-gray-100 dark:border-white/5">
