@@ -139,12 +139,12 @@ export default async function UserCard({ params }) {
                 title={title}
                 company={company}
                 phone={fullPhone}
+                email={email}
                 className="bg-red-600 border border-red-600 text-white rounded-xl flex flex-col items-center justify-center py-4 gap-2 shadow-sm active:scale-95 transition-all text-xs font-bold hover:bg-red-700"
             />
             
             <AddToHomeScreenButton 
-                className="bg-purple-600 border border-purple-600 text-white rounded-xl flex flex-col items-center justify-center py-4 gap-2 shadow-sm active:scale-95 transition-all text-xs font-bold hover:bg-purple
-                className="col-span-2 bg-red-600 border border-red-600 text-white rounded-xl flex flex-col items-center justify-center py-4 gap-2 shadow-sm active:scale-95 transition-all text-xs font-bold hover:bg-red-700"
+                className="bg-purple-600 border border-purple-600 text-white rounded-xl flex flex-col items-center justify-center py-4 gap-2 shadow-sm active:scale-95 transition-all text-xs font-bold hover:bg-purple-700"
             />
 
             <WriteNFCButton 
