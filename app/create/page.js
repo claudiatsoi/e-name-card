@@ -15,6 +15,7 @@ function CreateCardContent() {
     email: '',
   });
   const [status, setStatus] = useState('idle'); // idle, loading, success, error
+  const [errorMsg, setErrorMsg] = useState('');
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -23,6 +24,7 @@ function CreateCardContent() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setStatus('loading');
+    setErrorMsg('');
 
     try {
       const payload = {
@@ -38,13 +40,17 @@ function CreateCardContent() {
         body: JSON.stringify(payload),
       });
 
-      if (!res.ok) throw new Error('Failed to create card');
-
       const data = await res.json();
+
+      if (!res.ok) {
+         throw new Error(data.error || 'Failed to create card'); 
+      }
+
       router.push(`/user/${data.id}?new=true`);
     } catch (error) {
       console.error(error);
       setStatus('error');
+      setErrorMsg(error.message);
     }
   };
 
@@ -116,7 +122,7 @@ function CreateCardContent() {
           
           {status === 'error' && (
              <p className="text-red-500 text-center text-sm">
-               Error: {status} Check console/network logs.
+               Error: {errorMsg}
              </p>
           )}
         </form>
