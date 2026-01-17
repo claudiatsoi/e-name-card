@@ -43,21 +43,50 @@ export async function POST(request) {
         throw new Error('Could not find User_Cards tab');
     }
 
-    await sheet.addRow({
-        id,
-        name,
-        title,
-        company,
-        area_code: area_code || '',
-        phone,
-        is_whatsapp: is_whatsapp ? 'TRUE' : 'FALSE',
-        email,
-        linkedin: linkedin || '',
-        others: others || '',
-        bio: bio || '',
-        created_at,
-        referred_by
+    // Dynamic Header Matching to handle Case/Space variations
+    await sheet.loadHeaderRow();
+    const headers = sheet.headerValues;
+    
+    const findHeader = (key) => {
+        // Try strict match first
+        if (headers.includes(key)) return key;
+        
+        // Try Normalized Match (ignore case, treat space as underscore)
+        const normalizedKey = key.toLowerCase().replace(/_/g, '').replace(/ /g, '');
+        return headers.find(h => h.toLowerCase().replace(/_/g, '').replace(/ /g, '') === normalizedKey);
+    };
+
+    const rowData = {};
+    const fieldMap = {
+        'id': id,
+        'name': name,
+        'title': title,
+        'company': company,
+        'area_code': area_code || '',
+        'phone': phone,
+        'is_whatsapp': is_whatsapp ? 'TRUE' : 'FALSE',
+        'email': email,
+        'linkedin': linkedin || '',
+        'others': others || '',
+        'bio': bio || '',
+        'created_at': created_at,
+        'referred_by': referred_by
+    };
+
+    Object.entries(fieldMap).forEach(([key, value]) => {
+        const header = findHeader(key);
+        if (header) {
+            rowData[header] = value;
+        } else {
+             // If no header found, try adding with the key as is (library might ignore it)
+             // or try common variations explicitly if needed
+             if (key === 'area_code') rowData['Area Code'] = value;
+             else if (key === 'referred_by') rowData['Referred By'] = value;
+             else rowData[key] = value;
+        }
     });
+
+    await sheet.addRow(rowData);
 
     return NextResponse.json({ id });
   } catch (error) {
