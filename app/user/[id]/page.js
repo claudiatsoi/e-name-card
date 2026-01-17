@@ -70,7 +70,7 @@ export default async function UserCard({ params }) {
          </div>
 
          <div className="mt-8">
-            <ShareButton title={`${name} - ${title}`} text={`Check out ${name}'s digital business card!`} url={`https://e-name-card.vercel.app/user/${id}`} />
+            <ShareButton title={`${name} - ${title}`} text={`Here's ${name} business card! Save it on your phone and create your own one!`} url={`https://e-name-card-hazel.claunode.com/user/${id}`} />
             <WriteNFCButton />
             <SaveContactButton 
                 name={name}

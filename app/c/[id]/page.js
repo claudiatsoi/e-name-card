@@ -101,7 +101,7 @@ export default async function InternalSalesCard({ params }) {
         </div>
 
         <div className="space-y-3 pt-6">
-          <ShareButton title={`${name} - ${title}`} text={`Contact ${name} from ${company}`} url={`https://e-name-card.vercel.app/c/${id}`} />
+          <ShareButton title={`${name} - ${title}`} text={`Here's ${name} business card! Save it on your phone and create your own one!`} url={`https://e-name-card-hazel.claunode.com/c/${id}`} />
           <WriteNFCButton />
           
           <SaveContactButton 
