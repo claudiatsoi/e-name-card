@@ -1,9 +1,12 @@
 'use client';
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useState, useEffect, Suspense } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 
-export default function CreateCard() {
+function CreateCardContent() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const referredBy = searchParams.get('ref') || '';
+  
   const [formData, setFormData] = useState({
     name: '',
     title: '',
@@ -22,18 +25,23 @@ export default function CreateCard() {
     setStatus('loading');
 
     try {
+      const payload = {
+        ...formData,
+        referred_by: referredBy
+      };
+
       const res = await fetch('/api/create-card', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(payload),
       });
 
       if (!res.ok) throw new Error('Failed to create card');
 
       const data = await res.json();
-      router.push(`/user/${data.id}`);
+      router.push(`/user/${data.id}?new=true`);
     } catch (error) {
       console.error(error);
       setStatus('error');
@@ -90,6 +98,13 @@ export default function CreateCard() {
               value={formData.email} onChange={handleChange}
             />
           </div>
+          
+           {/* Visual indicator for referral, purely informational or hidden */}
+          {referredBy && (
+            <div className="text-xs text-center text-gray-400">
+               Referred by: {referredBy}
+            </div>
+          )}
 
           <button 
             type="submit" 
@@ -105,5 +120,13 @@ export default function CreateCard() {
         </form>
       </div>
     </div>
+  );
+}
+
+export default function CreateCard() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-gray-50 flex items-center justify-center">Loading...</div>}>
+      <CreateCardContent />
+    </Suspense>
   );
 }

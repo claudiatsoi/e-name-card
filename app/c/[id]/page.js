@@ -70,7 +70,7 @@ export default async function InternalSalesCard({ params }) {
           />
           
           <Link 
-            href="/create"
+            href={`/create?ref=${id}`}
             className="block w-full border border-gray-300 text-gray-700 font-bold py-3 px-4 rounded-lg hover:bg-gray-50 transition duration-300"
           >
             Create Your Own Card
