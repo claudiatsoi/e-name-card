@@ -7,6 +7,7 @@ export default function AddToHomeScreenButton({ className, variant, cardTitle, c
 
   useEffect(() => {
     const isIosDevice = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+    // eslint-disable-next-line
     setIsIOS(isIosDevice);
 
     const handleBeforeInstallPrompt = (e) => {

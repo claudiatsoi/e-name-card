@@ -1,5 +1,6 @@
 'use client';
 import { useState } from 'react';
+import Image from 'next/image';
 import { QRCodeSVG } from 'qrcode.react';
 import { toPng } from 'html-to-image';
 import download from 'downloadjs';
@@ -76,7 +77,14 @@ export default function ShareButton({ title, text, url, className, variant, card
                              <p className="text-sm text-primary font-bold animate-pulse">Long press image to save</p>
                         </div>
                         <div className="w-full max-h-[60vh] overflow-y-auto rounded-xl shadow-lg border border-gray-100 p-2 bg-gray-50/50">
-                            <img src={generatedImage} alt="Digital Card" className="w-full h-auto rounded-lg" />
+                            <Image 
+                                src={generatedImage} 
+                                alt="Digital Card" 
+                                width={600} 
+                                height={800} 
+                                className="w-full h-auto rounded-lg" 
+                                unoptimized
+                            />
                         </div>
                         <button 
                             onClick={() => setGeneratedImage(null)}
