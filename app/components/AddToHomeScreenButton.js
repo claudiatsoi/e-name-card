@@ -1,7 +1,7 @@
 'use client';
 import { useState, useEffect } from 'react';
 
-export default function AddToHomeScreenButton({ className }) {
+export default function AddToHomeScreenButton({ className, variant, cardTitle, cardSubtitle }) {
   const [deferredPrompt, setDeferredPrompt] = useState(null);
   const [isIOS, setIsIOS] = useState(false);
 
@@ -34,6 +34,20 @@ export default function AddToHomeScreenButton({ className }) {
       alert("To add to Home Screen, use your browser's menu option 'Add to Home Screen' or 'Install app'.");
     }
   };
+
+  if (variant === 'card') {
+    return (
+       <button onClick={handleInstallClick} className="flex flex-1 gap-4 rounded-xl border border-black/5 bg-white p-5 flex-col whisper-shadow active:bg-primary/5 transition-colors cursor-pointer text-left w-full h-full hover:shadow-md">
+          <div className="text-primary bg-primary/10 size-10 rounded-lg flex items-center justify-center">
+             <span className="material-symbols-outlined">ios_share</span>
+          </div>
+          <div className="flex flex-col gap-0.5">
+             <h2 className="text-[#121517] text-base font-bold leading-tight">{cardTitle || 'Home Screen'}</h2>
+             <p className="text-[#657b86] text-xs font-normal leading-normal">{cardSubtitle || 'Add as bookmark'}</p>
+          </div>
+       </button>
+    );
+  }
 
   return (
     <button

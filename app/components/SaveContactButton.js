@@ -1,6 +1,6 @@
 'use client';
 
-export default function SaveContactButton({ name, company, title, phone, email, className }) {
+export default function SaveContactButton({ name, company, title, phone, email, className, variant, cardTitle, cardSubtitle }) {
   const handleSave = () => {
     // Split name efficiently for vCard "N" field (Family Name; Given Name; ...)
     const parts = name ? name.trim().split(' ') : [];
@@ -28,6 +28,20 @@ END:VCARD`;
     a.click();
     window.URL.revokeObjectURL(url);
   };
+
+  if (variant === 'card') {
+    return (
+       <button onClick={handleSave} className="flex flex-1 gap-4 rounded-xl border border-black/5 bg-white p-5 flex-col whisper-shadow active:bg-primary/5 transition-colors cursor-pointer text-left w-full h-full hover:shadow-md">
+          <div className="text-primary bg-primary/10 size-10 rounded-lg flex items-center justify-center">
+             <span className="material-symbols-outlined">person_add</span>
+          </div>
+          <div className="flex flex-col gap-0.5">
+             <h2 className="text-[#121517] text-base font-bold leading-tight">{cardTitle || 'Save Contact'}</h2>
+             <p className="text-[#657b86] text-xs font-normal leading-normal">{cardSubtitle || 'Download vCard'}</p>
+          </div>
+       </button>
+    );
+  }
 
   return (
     <button

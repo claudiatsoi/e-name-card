@@ -1,7 +1,7 @@
 'use client';
 import { useState } from 'react';
 
-export default function ShareButton({ title, text, url, className }) {
+export default function ShareButton({ title, text, url, className, variant, cardTitle, cardSubtitle }) {
   const [copied, setCopied] = useState(false);
 
   const handleShare = async () => {

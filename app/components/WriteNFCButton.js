@@ -1,7 +1,7 @@
 'use client';
 import { useState } from 'react';
 
-export default function WriteNFCButton({ className }) {
+export default function WriteNFCButton({ className, variant, cardTitle, cardSubtitle }) {
   const [status, setStatus] = useState('idle'); // idle, writing, success, error, unsupported
   const [errorMsg, setErrorMsg] = useState('');
 
@@ -28,10 +28,44 @@ export default function WriteNFCButton({ className }) {
   };
 
   if (status === 'success') {
+    if (variant === 'card') {
+        return (
+            <button className="flex flex-1 gap-4 rounded-xl border border-green-200 bg-green-50 p-5 flex-col whisper-shadow cursor-default text-left w-full h-full">
+                <div className="text-green-600 bg-green-100 size-10 rounded-lg flex items-center justify-center">
+                    <span className="material-symbols-outlined">check_circle</span>
+                </div>
+                <div className="flex flex-col gap-0.5">
+                    <h2 className="text-green-800 text-base font-bold leading-tight">Success!</h2>
+                    <p className="text-green-600 text-xs font-normal leading-normal">Tag written.</p>
+                </div>
+            </button>
+        )
+    }
     return (
         <button className={className ? `${className} bg-green-600` : "w-full bg-green-600 text-white font-medium py-2 px-4 rounded-lg mb-2 pointer-events-none text-sm shadow-sm"}>
             Success!
         </button>
+    );
+  }
+
+  if (variant === 'card') {
+    return (
+       <div className="relative w-full h-full">
+           <button onClick={handleWrite} className="flex flex-1 gap-4 rounded-xl border border-black/5 bg-white p-5 flex-col whisper-shadow active:bg-primary/5 transition-colors cursor-pointer text-left w-full h-full hover:shadow-md">
+              <div className="text-primary bg-primary/10 size-10 rounded-lg flex items-center justify-center">
+                 <span className="material-symbols-outlined">contactless</span>
+              </div>
+              <div className="flex flex-col gap-0.5">
+                 <h2 className="text-[#121517] text-base font-bold leading-tight">
+                    {status === 'writing' ? 'Tap Tag...' : (cardTitle || 'Write to NFC')}
+                 </h2>
+                 <p className="text-[#657b86] text-xs font-normal leading-normal">
+                    {status === 'writing' ? 'Hold phone near tag' : (cardSubtitle || 'Program NFC tag')}
+                 </p>
+              </div>
+           </button>
+           {status === 'unsupported' && <div className="absolute top-0 right-0 bg-red-100 text-red-600 text-[10px] px-1 rounded">Unsupported</div>}
+       </div>
     );
   }
 
