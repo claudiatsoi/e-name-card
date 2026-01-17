@@ -12,13 +12,16 @@ function CreateCardContent() {
     title: '',
     company: '',
     phone: '',
+    area_code: '',
+    is_whatsapp: false,
     email: '',
   });
   const [status, setStatus] = useState('idle'); // idle, loading, success, error
   const [errorMsg, setErrorMsg] = useState('');
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const value = e.target.type === 'checkbox' ? e.target.checked : e.target.value;
+    setFormData({ ...formData, [e.target.name]: value });
   };
 
   const handleSubmit = async (e) => {
@@ -89,11 +92,31 @@ function CreateCardContent() {
 
           <div>
             <label className="block text-sm font-medium text-gray-700">Phone</label>
-            <input 
-              name="phone" type="tel" required 
-              className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-              value={formData.phone} onChange={handleChange}
-            />
+            <div className="flex gap-2">
+                <input 
+                  name="area_code" type="text" placeholder="852"
+                  className="mt-1 block w-20 px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                  value={formData.area_code} onChange={handleChange}
+                />
+                <input 
+                  name="phone" type="tel" required placeholder="Phone Number"
+                  className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                  value={formData.phone} onChange={handleChange}
+                />
+            </div>
+            <div className="mt-2 flex items-center">
+                <input
+                    id="is_whatsapp"
+                    name="is_whatsapp"
+                    type="checkbox"
+                    className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                    checked={formData.is_whatsapp}
+                    onChange={handleChange}
+                />
+                <label htmlFor="is_whatsapp" className="ml-2 block text-sm text-gray-900">
+                    Is this a WhatsApp number?
+                </label>
+            </div>
           </div>
 
           <div>
