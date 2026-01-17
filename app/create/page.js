@@ -115,7 +115,9 @@ function CreateCardContent() {
           </button>
           
           {status === 'error' && (
-             <p className="text-red-500 text-center text-sm">Something went wrong. Please try again.</p>
+             <p className="text-red-500 text-center text-sm">
+               Error: {status} Check console/network logs.
+             </p>
           )}
         </form>
       </div>
