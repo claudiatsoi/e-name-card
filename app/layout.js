@@ -18,12 +18,13 @@ export const metadata = {
   description: "Powered by Claudia Tsoi",
   manifest: "/manifest.json",
   icons: {
-    icon: '/eventx-logo.png',
+    icon: '/favicon.png',
+    apple: '/favicon.png',
   },
   openGraph: {
     title: "Create Your Digital Name card in 5 seconds!",
     description: "Powered by Claudia Tsoi",
-    images: ['/eventx-logo.png'],
+    images: ['/favicon.png'],
   },
 };
 
