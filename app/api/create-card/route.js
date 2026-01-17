@@ -14,6 +14,8 @@ export async function POST(request) {
     
     // Generate a simple unique ID
     const id = crypto.randomUUID().split('-')[0]; // Use first section of UUID for brevity
+    const created_at = new Date().toISOString();
+    const referred_by = body.referred_by || '';
 
     await sheet.addRow({
         id,
@@ -21,7 +23,9 @@ export async function POST(request) {
         title,
         company,
         phone,
-        email
+        email,
+        created_at,
+        referred_by
     });
 
     return NextResponse.json({ id });
