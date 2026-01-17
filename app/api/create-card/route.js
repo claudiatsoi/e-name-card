@@ -1,8 +1,26 @@
 import { getSheet } from '@/lib/googleSheet';
 import { NextResponse } from 'next/server';
 
+// Simple in-memory rate limiting (per server instance)
+const rateLimit = new Map();
+const RATE_LIMIT_WINDOW = 60 * 1000; // 60 seconds
+
 export async function POST(request) {
   try {
+    // Rate Limiting Check
+    const ip = request.headers.get('x-forwarded-for') || 'unknown';
+    const now = Date.now();
+    
+    if (rateLimit.has(ip)) {
+      const lastTime = rateLimit.get(ip);
+      if (now - lastTime < RATE_LIMIT_WINDOW) {
+         return NextResponse.json({ 
+           error: 'Please wait 1 minute before creating another card.' 
+         }, { status: 429 });
+      }
+    }
+    rateLimit.set(ip, now);
+
     const body = await request.json();
     const { name, title, company, phone, email } = body;
     
