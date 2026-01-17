@@ -6,6 +6,9 @@ export async function POST(request) {
     const body = await request.json();
     const { name, title, company, phone, email } = body;
     
+    // Debug Auth
+    console.log("Auth Email being used:", process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL);
+
     if (!name || !title || !company || !phone || !email) {
        return NextResponse.json({ error: 'Missing fields' }, { status: 400 });
     }
