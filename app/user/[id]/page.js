@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { getSheet } from '@/lib/googleSheet';
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
+import { QRCodeSVG } from 'qrcode.react'; 
 import SaveContactButton from '@/app/components/SaveContactButton';
 import WriteNFCButton from '@/app/components/WriteNFCButton';
 import ShareButton from '@/app/components/ShareButton';
@@ -35,6 +36,9 @@ export default async function UserCard({ params }) {
   const email = get('email');
   const areaCode = String(get('area_code') || get('Area Code') || get('Area_Code') || '').trim();
   const isWhatsapp = String(get('is_whatsapp') || get('Is Whatsapp') || '').trim().toLowerCase() === 'true';
+  const linkedin = get('linkedin') || get('LinkedIn') || '';
+  const others = get('others') || get('Others') || get('others_url') || '';
+  const bio = get('bio') || get('Bio') || '';
 
   const fullPhone = areaCode ? `${areaCode}${phone}` : phone;
   const whatsappUrl = isWhatsapp ? `https://wa.me/${fullPhone.replace(/[^0-9]/g,'')}` : '';
@@ -68,11 +72,29 @@ export default async function UserCard({ params }) {
                     </a>
                     
                     <div className="flex w-full flex-col items-start justify-center gap-6 p-8 min-h-[200px]">
-                        <div>
-                            <h1 className="text-[#121517] text-3xl font-extrabold leading-tight tracking-[-0.02em]">{name}</h1>
-                            <p className="text-primary text-lg font-medium mt-1">{title}</p>
-                            <p className="text-[#657b86] text-base font-normal">{company}</p>
+                        <div className="flex w-full justify-between items-start gap-4">
+                            <div>
+                                <h1 className="text-[#121517] text-3xl font-extrabold leading-tight tracking-[-0.02em]">{name}</h1>
+                                <p className="text-primary text-lg font-medium mt-1">{title}</p>
+                                <p className="text-[#657b86] text-base font-normal">{company}</p>
+                            </div>
+                            <div className="shrink-0 p-1 bg-white">
+                                <QRCodeSVG 
+                                    value={`https://name-card.claunode.com/user/${id}`}
+                                    size={48}
+                                    level="L"
+                                    fgColor="#121517"
+                                />
+                            </div>
                         </div>
+
+                        {bio && (
+                            <div className="w-full">
+                                <p className="text-[#657b86] text-sm leading-relaxed whitespace-pre-wrap italic">
+                                    "{bio}"
+                                </p>
+                            </div>
+                        )}
                         
                         <div className="w-full space-y-3 pt-4 border-t border-gray-100 flex-1">
                             <div className="flex items-center gap-3">
@@ -82,13 +104,25 @@ export default async function UserCard({ params }) {
                             {isWhatsapp && (
                                 <div className="flex items-center gap-3">
                                     <span className="material-symbols-outlined text-green-600 text-xl">chat</span>
-                                    <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" className="text-[#121517] text-sm font-medium hover:text-green-600">WhatsApp Chat</a>
+                                    <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" className="text-green-600 font-bold underline decoration-green-600/30 hover:decoration-green-600 text-sm">WhatsApp Chat</a>
                                 </div>
                             )}
                             <div className="flex items-center gap-3">
                                 <span className="material-symbols-outlined text-primary text-xl">mail</span>
                                 <a href={`mailto:${email}`} className="text-[#121517] text-sm font-medium hover:text-primary">{email}</a>
                             </div>
+                            {linkedin && (
+                                <div className="flex items-center gap-3">
+                                    <span className="material-symbols-outlined text-primary text-xl">social_leaderboard</span>
+                                    <a href={linkedin} target="_blank" rel="noopener noreferrer" className="text-[#121517] text-sm font-medium hover:text-primary truncate max-w-[200px]">LinkedIn</a>
+                                </div>
+                            )}
+                            {others && (
+                                <div className="flex items-center gap-3">
+                                    <span className="material-symbols-outlined text-primary text-xl">language</span>
+                                    <a href={others} target="_blank" rel="noopener noreferrer" className="text-[#121517] text-sm font-medium hover:text-primary truncate max-w-[200px]">{others.replace(/^https?:\/\//, '')}</a>
+                                </div>
+                            )}
                         </div>
 
                         <div className="w-full pt-4 mt-auto border-t border-gray-100 flex items-center justify-center gap-1 opacity-60">
