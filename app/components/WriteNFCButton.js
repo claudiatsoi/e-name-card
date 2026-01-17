@@ -29,17 +29,17 @@ export default function WriteNFCButton() {
 
   if (status === 'success') {
     return (
-        <button className="w-full bg-green-600 text-white font-bold py-3 px-4 rounded-lg mb-4 pointer-events-none">
+        <button className="w-full bg-green-600 text-white font-medium py-2 px-4 rounded-lg mb-2 pointer-events-none text-sm shadow-sm">
             Success! NFC Written
         </button>
     );
   }
 
   return (
-    <div className="w-full mb-4">
+    <div className="w-full mb-2">
         <button
         onClick={handleWrite}
-        className="w-full bg-purple-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-purple-700 transition duration-300"
+        className="w-full bg-purple-600 text-white font-medium py-2 px-4 rounded-lg hover:bg-purple-700 transition duration-300 text-sm shadow-sm"
         >
         {status === 'writing' ? 'Tap NFC Tag Now...' : 'Write to NFC Tag'}
         </button>

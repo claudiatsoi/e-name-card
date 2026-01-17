@@ -30,7 +30,7 @@ export default function ShareButton({ title, text, url }) {
   return (
     <button
       onClick={handleShare}
-      className="w-full bg-indigo-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-indigo-700 transition duration-300 mb-4 flex items-center justify-center gap-2"
+      className="w-full bg-indigo-600 text-white font-medium py-2 px-4 rounded-lg hover:bg-indigo-700 transition duration-300 mb-2 flex items-center justify-center gap-2 text-sm shadow-sm"
     >
       {copied ? (
          <span>Link Copied!</span>
