@@ -53,13 +53,16 @@ export default async function UserCard({ params }) {
                   <a href={`tel:${fullPhone}`} className="text-gray-800 hover:text-blue-600">
                     {areaCode && <span>+{areaCode} </span>}{phone}
                   </a>
-                  {isWhatsapp && (
-                    <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" className="text-green-600 text-xs font-bold hover:underline mt-1">
-                      Chat on WhatsApp
-                    </a>
-                  )}
                 </div>
             </div>
+            {isWhatsapp && (
+             <div className="flex items-center space-x-3 p-3 bg-gray-50 rounded-lg">
+                <span className="text-gray-500 uppercase text-xs font-bold w-12 text-green-600">WhatsApp</span>
+                <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" className="text-green-600 hover:underline break-all text-sm">
+                  {whatsappUrl}
+                </a>
+             </div>
+            )}
             <div className="flex items-center space-x-3 p-3 bg-gray-50 rounded-lg">
                 <span className="text-gray-500 uppercase text-xs font-bold w-12">Email</span>
                 <a href={`mailto:${email}`} className="text-gray-800 hover:text-blue-600 break-all">{email}</a>
