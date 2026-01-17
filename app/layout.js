@@ -14,6 +14,10 @@ const geistMono = Geist_Mono({
 export const metadata = {
   title: "Create Your Digital Name card in 5 seconds!",
   description: "Powered by Claudia Tsoi",
+  manifest: "/manifest.json",
+  icons: {
+    icon: '/eventx-logo.png',
+  },
   openGraph: {
     title: "Create Your Digital Name card in 5 seconds!",
     description: "Powered by Claudia Tsoi",

@@ -67,7 +67,7 @@ function CreateCardContent() {
             <label className="block text-sm font-medium text-gray-700">Name</label>
             <input 
               name="name" type="text" required 
-              className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+              className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-gray-900"
               value={formData.name} onChange={handleChange}
             />
           </div>
@@ -76,7 +76,7 @@ function CreateCardContent() {
             <label className="block text-sm font-medium text-gray-700">Title</label>
             <input 
               name="title" type="text" required 
-              className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+              className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-gray-900"
               value={formData.title} onChange={handleChange}
             />
           </div>
@@ -85,7 +85,7 @@ function CreateCardContent() {
             <label className="block text-sm font-medium text-gray-700">Company</label>
             <input 
               name="company" type="text" required 
-              className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+              className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-gray-900"
               value={formData.company} onChange={handleChange}
             />
           </div>
@@ -95,12 +95,12 @@ function CreateCardContent() {
             <div className="flex gap-2">
                 <input 
                   name="area_code" type="text" placeholder="852"
-                  className="mt-1 block w-20 px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                  className="mt-1 block w-20 px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-gray-900"
                   value={formData.area_code} onChange={handleChange}
                 />
                 <input 
                   name="phone" type="tel" required placeholder="Phone Number"
-                  className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                  className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-gray-900"
                   value={formData.phone} onChange={handleChange}
                 />
             </div>
@@ -123,7 +123,7 @@ function CreateCardContent() {
             <label className="block text-sm font-medium text-gray-700">Email</label>
             <input 
               name="email" type="email" required 
-              className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+              className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-gray-900"
               value={formData.email} onChange={handleChange}
             />
           </div>

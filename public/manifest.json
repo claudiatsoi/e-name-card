@@ -1,0 +1,21 @@
+{
+  "short_name": "E-Card",
+  "name": "E-Name Card",
+  "icons": [
+    {
+      "src": "/eventx-logo.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "/eventx-logo.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": "/create",
+  "scope": "/",
+  "background_color": "#ffffff",
+  "theme_color": "#ffffff",
+  "display": "standalone"
+}
