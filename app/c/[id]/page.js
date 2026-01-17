@@ -37,7 +37,7 @@ export default async function InternalSalesCard({ params }) {
   const isWhatsapp = String(get('is_whatsapp') || '').trim().toLowerCase() === 'true';
 
   const fullPhone = areaCode ? `${areaCode}${phone}` : phone;
-  const whatsappUrl = isWhatsapp ? `https://wa.me/${fullPhone.replace(/\+/g,'')}` : '';
+  const whatsappUrl = isWhatsapp ? `https://wa.me/${fullPhone.replace(/[^0-9]/g,'')}` : '';
 
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4">
