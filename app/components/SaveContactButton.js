@@ -1,6 +1,6 @@
 'use client';
 
-export default function SaveContactButton({ name, company, title, phone, email }) {
+export default function SaveContactButton({ name, company, title, phone, email, className }) {
   const handleSave = () => {
     // Split name efficiently for vCard "N" field (Family Name; Given Name; ...)
     const parts = name ? name.trim().split(' ') : [];
@@ -32,7 +32,7 @@ END:VCARD`;
   return (
     <button
       onClick={handleSave}
-      className="w-full bg-blue-600 text-white font-medium py-2 px-4 rounded-lg hover:bg-blue-700 transition duration-300 mb-2 text-sm shadow-sm"
+      className={className || "w-full bg-blue-600 text-white font-medium py-2 px-4 rounded-lg hover:bg-blue-700 transition duration-300 mb-2 text-sm shadow-sm"}
     >
       Save Contact
     </button>

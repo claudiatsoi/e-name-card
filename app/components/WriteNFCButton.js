@@ -1,7 +1,7 @@
 'use client';
 import { useState } from 'react';
 
-export default function WriteNFCButton() {
+export default function WriteNFCButton({ className }) {
   const [status, setStatus] = useState('idle'); // idle, writing, success, error, unsupported
   const [errorMsg, setErrorMsg] = useState('');
 
@@ -29,17 +29,17 @@ export default function WriteNFCButton() {
 
   if (status === 'success') {
     return (
-        <button className="w-full bg-green-600 text-white font-medium py-2 px-4 rounded-lg mb-2 pointer-events-none text-sm shadow-sm">
-            Success! NFC Written
+        <button className={className ? `${className} bg-green-600` : "w-full bg-green-600 text-white font-medium py-2 px-4 rounded-lg mb-2 pointer-events-none text-sm shadow-sm"}>
+            Success!
         </button>
     );
   }
 
   return (
-    <div className="w-full mb-2">
+    <div className={className ? "w-full h-full" : "w-full mb-2"}>
         <button
         onClick={handleWrite}
-        className="w-full bg-purple-600 text-white font-medium py-2 px-4 rounded-lg hover:bg-purple-700 transition duration-300 text-sm shadow-sm"
+        className={className || "w-full bg-purple-600 text-white font-medium py-2 px-4 rounded-lg hover:bg-purple-700 transition duration-300 text-sm shadow-sm"}
         >
         {status === 'writing' ? 'Tap NFC Tag Now...' : 'Write to NFC Tag'}
         </button>
