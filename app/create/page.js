@@ -75,21 +75,21 @@ function CreateCardContent() {
         {/* Live Preview Section */}
         <section className="p-6">
             <h4 className="text-primary text-[10px] font-extrabold leading-normal tracking-[0.2em] mb-4 text-center uppercase">Live Digital Preview</h4>
-            {/* Text-based Minimalist Card */}
-            <div className="preview-card-shadow bg-white dark:bg-white/5 border border-[#dae5e7] dark:border-primary/30 rounded p-8 min-h-[220px] flex flex-col justify-between transition-all duration-300">
+            {/* Text-based Minimalist Card - Scaled Down */}
+            <div className="preview-card-shadow bg-white dark:bg-white/5 border border-[#dae5e7] dark:border-primary/30 rounded p-6 min-h-[180px] flex flex-col justify-between transition-all duration-300 max-w-[90%] mx-auto">
                 <div className="flex flex-col gap-1">
-                    <span className="text-primary text-[11px] font-bold tracking-[0.15em] uppercase mb-1">{formData.title || 'Job Title'}</span>
-                    <h1 className="text-[#101818] dark:text-white text-3xl font-extrabold tracking-tighter leading-none mb-2">{formData.name || 'Your Name'}</h1>
-                    <p className="text-[#5e888d] dark:text-[#a0c4c8] text-sm font-medium leading-relaxed max-w-[280px]">{formData.company || 'Company Name'}</p>
+                    <span className="text-primary text-[10px] font-bold tracking-[0.15em] uppercase mb-1">{formData.title || 'Job Title'}</span>
+                    <h1 className="text-[#101818] dark:text-white text-2xl font-extrabold tracking-tighter leading-none mb-2">{formData.name || 'Your Name'}</h1>
+                    <p className="text-[#5e888d] dark:text-[#a0c4c8] text-xs font-medium leading-relaxed max-w-[240px]">{formData.company || 'Company Name'}</p>
                 </div>
-                <div className="mt-8 pt-6 border-t border-dashed border-[#dae5e7] dark:border-primary/20 flex flex-wrap gap-x-6 gap-y-2">
-                    <div className="flex items-center gap-2">
-                        <span className="material-symbols-outlined text-primary text-[18px]">call</span>
-                        <span className="text-[#101818] dark:text-white text-xs font-bold">{formData.phone ? (formData.area_code ? `+${formData.area_code} ${formData.phone}` : formData.phone) : 'Phone Number'}</span>
+                <div className="mt-6 pt-4 border-t border-dashed border-[#dae5e7] dark:border-primary/20 flex flex-wrap gap-x-4 gap-y-2">
+                    <div className="flex items-center gap-1.5">
+                        <span className="material-symbols-outlined text-primary text-[16px]">call</span>
+                        <span className="text-[#101818] dark:text-white text-[10px] font-bold">{formData.phone ? (formData.area_code ? `+${formData.area_code} ${formData.phone}` : formData.phone) : 'Phone Number'}</span>
                     </div>
-                    <div className="flex items-center gap-2">
-                        <span className="material-symbols-outlined text-primary text-[18px]">alternate_email</span>
-                        <span className="text-[#101818] dark:text-white text-xs font-bold">{formData.email || 'email@example.com'}</span>
+                    <div className="flex items-center gap-1.5">
+                        <span className="material-symbols-outlined text-primary text-[16px]">alternate_email</span>
+                        <span className="text-[#101818] dark:text-white text-[10px] font-bold">{formData.email || 'email@example.com'}</span>
                     </div>
                 </div>
             </div>
