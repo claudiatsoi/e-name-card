@@ -64,6 +64,7 @@ export default async function InternalSalesCard({ params }) {
                                  fill 
                                  className="object-contain"
                                  priority
+                                 unoptimized
                              /> 
                         </div>
                     </a>
@@ -93,7 +94,7 @@ export default async function InternalSalesCard({ params }) {
                             {linkedin && (
                                 <div className="flex items-center gap-3">
                                     <span className="material-symbols-outlined text-blue-600 text-xl">work</span> 
-                                    <a href={linkedin} target="_blank" rel="noopener noreferrer" className="text-[#121517] text-sm font-medium hover:text-blue-600">LinkedIn Profile</a>
+                                    <a href={linkedin} target="_blank" rel="noopener noreferrer" className="text-[#121517] text-sm font-medium hover:text-blue-600 break-all">{linkedin.replace(/^https?:\/\//, '')}</a>
                                 </div>
                             )}
                         </div>
@@ -106,6 +107,7 @@ export default async function InternalSalesCard({ params }) {
                                      alt="EventX" 
                                      fill 
                                      className="object-contain grayscale opacity-80"
+                                     unoptimized
                                 /> 
                             </div>
                         </div>

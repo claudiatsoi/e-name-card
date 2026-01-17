@@ -67,6 +67,7 @@ export default async function UserCard({ params }) {
                                  fill 
                                  className="object-contain"
                                  priority
+                                 unoptimized
                              /> 
                         </div>
                     </a>
@@ -114,7 +115,7 @@ export default async function UserCard({ params }) {
                             {linkedin && (
                                 <div className="flex items-center gap-3">
                                     <span className="material-symbols-outlined text-primary text-xl">social_leaderboard</span>
-                                    <a href={linkedin} target="_blank" rel="noopener noreferrer" className="text-[#121517] text-sm font-medium hover:text-primary truncate max-w-[200px]">LinkedIn</a>
+                                    <a href={linkedin} target="_blank" rel="noopener noreferrer" className="text-[#121517] text-sm font-medium hover:text-primary break-all">{linkedin.replace(/^https?:\/\//, '')}</a>
                                 </div>
                             )}
                             {others && (
@@ -133,6 +134,7 @@ export default async function UserCard({ params }) {
                                      alt="EventX" 
                                      fill 
                                      className="object-contain grayscale opacity-80"
+                                     unoptimized
                                 /> 
                             </div>
                         </div>
