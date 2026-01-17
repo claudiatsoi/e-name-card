@@ -27,6 +27,20 @@ export default function ShareButton({ title, text, url, className, variant, card
     }
   };
 
+  if (variant === 'card') {
+    return (
+       <button onClick={handleShare} className="flex flex-1 gap-4 rounded-xl border border-black/5 bg-white p-5 flex-col whisper-shadow active:bg-primary/5 transition-colors cursor-pointer text-left w-full h-full hover:shadow-md">
+          <div className="text-primary bg-primary/10 size-10 rounded-lg flex items-center justify-center">
+             <span className="material-symbols-outlined">{copied ? 'check' : 'ios_share'}</span>
+          </div>
+          <div className="flex flex-col gap-0.5">
+             <h2 className="text-[#121517] text-base font-bold leading-tight">{copied ? 'Copied!' : (cardTitle || 'Share Card')}</h2>
+             <p className="text-[#657b86] text-xs font-normal leading-normal">{copied ? 'Link in clipboard' : (cardSubtitle || 'Share via Link')}</p>
+          </div>
+       </button>
+    );
+  }
+
   return (
     <button
       onClick={handleShare}
