@@ -1,5 +1,6 @@
 import { Epilogue, Noto_Sans } from "next/font/google";
 import "./globals.css";
+import Script from "next/script";
 
 const epilogue = Epilogue({
   variable: "--font-epilogue",
@@ -37,6 +38,19 @@ export default function RootLayout({ children }) {
       <body
         className={`${epilogue.variable} ${notoSans.variable} font-sans antialiased bg-background-light text-[#121517] min-h-screen`}
       >
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-0JBCTS340J"
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+
+            gtag('config', 'G-0JBCTS340J');
+          `}
+        </Script>
         {children}
       </body>
     </html>
