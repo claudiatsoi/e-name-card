@@ -83,9 +83,15 @@ export default async function InternalSalesCard({ params }) {
                                         unoptimized
                                     />
                                 </div>
-                             ) : <div></div>}
+                             ) : (
+                                <div className="flex-1 pr-4">
+                                    <h1 className="text-[#121517] text-3xl font-extrabold leading-tight tracking-[-0.02em]">{name}</h1>
+                                    <p className="text-primary text-lg font-medium mt-1">{title}</p>
+                                    <p className="text-[#657b86] text-base font-normal mt-1">{company}</p>
+                                </div>
+                             )}
                              
-                             <div className="p-1 bg-white">
+                             <div className="p-1 bg-white shrink-0">
                                 <QRCodeSVG 
                                     value={`https://name-card.claunode.com/c/${id}`}
                                     size={48}
@@ -95,11 +101,13 @@ export default async function InternalSalesCard({ params }) {
                              </div>
                         </div>
 
-                        <div className="w-full">
-                            <h1 className="text-[#121517] text-3xl font-extrabold leading-tight tracking-[-0.02em]">{name}</h1>
-                            <p className="text-primary text-lg font-medium mt-1">{title}</p>
-                            <p className="text-[#657b86] text-base font-normal mt-1">{company}</p>
-                        </div>
+                        {avatar && (
+                            <div className="w-full">
+                                <h1 className="text-[#121517] text-3xl font-extrabold leading-tight tracking-[-0.02em]">{name}</h1>
+                                <p className="text-primary text-lg font-medium mt-1">{title}</p>
+                                <p className="text-[#657b86] text-base font-normal mt-1">{company}</p>
+                            </div>
+                        )}
                         
                         <div className="w-full space-y-3 pt-4 border-t border-gray-100 flex-1">
                             <div className="flex items-center gap-3">
