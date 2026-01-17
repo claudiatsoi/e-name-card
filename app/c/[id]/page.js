@@ -74,32 +74,32 @@ export default async function InternalSalesCard({ params }) {
                     <div className="flex w-full flex-col items-start justify-center gap-6 p-8 min-h-[200px]">
                         <div className="flex w-full justify-between items-start gap-4">
                             <div className="flex-1">
-                                <div className="flex items-center gap-4 mb-2">
-                                     {avatar && (
-                                        <div className="relative w-16 h-16 rounded-full overflow-hidden border-2 border-primary/10 shrink-0">
-                                            <Image 
-                                                src={avatar}
-                                                alt={name}
-                                                fill
-                                                className="object-cover"
-                                                unoptimized
-                                            />
-                                        </div>
-                                     )}
-                                     <div>
-                                        <h1 className="text-[#121517] text-3xl font-extrabold leading-tight tracking-[-0.02em]">{name}</h1>
-                                        <p className="text-primary text-lg font-medium mt-1">{title}</p>
-                                     </div>
+                                <div>
+                                    <h1 className="text-[#121517] text-3xl font-extrabold leading-tight tracking-[-0.02em]">{name}</h1>
+                                    <p className="text-primary text-lg font-medium mt-1">{title}</p>
+                                    <p className="text-[#657b86] text-base font-normal mt-1">{company}</p>
                                 </div>
-                                <p className="text-[#657b86] text-base font-normal">{company}</p>
                             </div>
-                            <div className="shrink-0 p-1 bg-white">
-                                <QRCodeSVG 
-                                    value={`https://name-card.claunode.com/c/${id}`}
-                                    size={48}
-                                    level="L"
-                                    fgColor="#121517"
-                                />
+                            <div className="flex flex-col items-center gap-3 shrink-0">
+                                <div className="p-1 bg-white">
+                                    <QRCodeSVG 
+                                        value={`https://name-card.claunode.com/c/${id}`}
+                                        size={48}
+                                        level="L"
+                                        fgColor="#121517"
+                                    />
+                                </div>
+                                {avatar && (
+                                    <div className="relative w-14 h-14 rounded-full overflow-hidden border-2 border-primary/10">
+                                        <Image 
+                                            src={avatar}
+                                            alt={name}
+                                            fill
+                                            className="object-cover"
+                                            unoptimized
+                                        />
+                                    </div>
+                                )}
                             </div>
                         </div>
                         
