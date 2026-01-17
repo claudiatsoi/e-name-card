@@ -53,7 +53,7 @@ export default async function UserCard({ params }) {
          <main className="flex-1 px-6 pt-4 pb-12">
             {/* Central Digital Card */}
             <div className="relative group mt-4">
-                <div className="whisper-shadow flex flex-col items-stretch justify-start rounded-xl bg-white dark:bg-[#1f2226] border border-black/5 dark:border-white/5 overflow-hidden">
+                <div id="user-card-visual" className="whisper-shadow flex flex-col items-stretch justify-start rounded-xl bg-white dark:bg-[#1f2226] border border-black/5 dark:border-white/5 overflow-hidden">
                     {/* Top Banner (keeping EventX logic but integrated) */}
                     <div className="w-full h-24 bg-white relative flex items-center justify-center p-6 overflow-hidden border-b border-gray-100">
                         <div className="relative h-8 w-20 shrink-0">

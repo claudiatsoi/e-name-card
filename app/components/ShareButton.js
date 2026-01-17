@@ -1,10 +1,13 @@
 'use client';
 import { useState } from 'react';
 import { QRCodeSVG } from 'qrcode.react';
+import { toPng } from 'html-to-image';
+import download from 'downloadjs';
 
 export default function ShareButton({ title, text, url, className, variant, cardTitle, cardSubtitle }) {
   const [copied, setCopied] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const [savingImage, setSavingImage] = useState(false);
 
   const handleShare = async () => {
     if (navigator.share) {
@@ -18,7 +21,6 @@ export default function ShareButton({ title, text, url, className, variant, card
         console.error('Error sharing:', err);
       }
     } else {
-        // Fallback to clipboard
         try {
             await navigator.clipboard.writeText(url);
             setCopied(true);
@@ -27,6 +29,28 @@ export default function ShareButton({ title, text, url, className, variant, card
             console.error('Failed to copy', err);
         }
     }
+  };
+
+  const handleSaveImage = async () => {
+     setSavingImage(true);
+     // Try to find the visual card element
+     const node = document.getElementById('user-card-visual');
+     try {
+       if (node) {
+          const dataUrl = await toPng(node, { cacheBust: true, backgroundColor: '#ffffff' });
+          download(dataUrl, 'name-card.png');
+       } else {
+          console.warn('Card element not found');
+       }
+     } catch (err) {
+       console.error('Failed to save image', err);
+     } finally {
+       setSavingImage(false);
+     }
+  };
+
+  const handleWallet = () => {
+     alert("Wallet passes require manual setup or a backend service. This is a UI placeholder.");
   };
 
   if (variant === 'card') {
@@ -44,21 +68,57 @@ export default function ShareButton({ title, text, url, className, variant, card
 
        {showModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm" onClick={() => setShowModal(false)}>
-            <div className="bg-white dark:bg-[#1f2226] rounded-2xl w-full max-w-[320px] p-6 shadow-2xl relative flex flex-col items-center gap-6 animate-in fade-in zoom-in-95 duration-200" onClick={e => e.stopPropagation()}>
+            <div className="bg-white dark:bg-[#1f2226] rounded-2xl w-full max-w-[340px] p-6 shadow-2xl relative flex flex-col items-center gap-6 animate-in fade-in zoom-in-95 duration-200" onClick={e => e.stopPropagation()}>
                 <button onClick={() => setShowModal(false)} className="absolute top-4 right-4 p-2 rounded-full hover:bg-black/5 dark:hover:bg-white/10 transition-colors">
                     <span className="material-symbols-outlined text-gray-400">close</span>
                 </button>
                 
                 <div className="text-center mt-2">
                     <h3 className="text-xl font-bold text-[#121517] dark:text-white mb-1">Scan to Connect</h3>
-                    <p className="text-sm text-[#657b86] dark:text-white/60">Share this profile via QR Code</p>
+                    <p className="text-sm text-[#657b86] dark:text-white/60">Share this profile seamlessly</p>
                 </div>
 
                 <div className="bg-white p-4 rounded-xl border border-gray-100 shadow-inner">
-                    <QRCodeSVG value={url} size={180} />
+                    <QRCodeSVG value={url} size={160} />
                 </div>
 
-                <div className="w-full pt-2 border-t border-gray-100 dark:border-white/5">
+                {/* Additional Action Grid */}
+                 <div className="grid grid-cols-3 gap-3 w-full">
+                    {/* Add to Apple Wallet */}
+                    <button 
+                      onClick={() => alert('Apple Wallet integration requires a backend pass generator service.')} 
+                      className="flex flex-col items-center justify-center gap-2 p-3 rounded-lg hover:bg-black/5 dark:hover:bg-white/5 transition-colors group"
+                    >
+                        <div className="w-10 h-10 rounded-full bg-black text-white flex items-center justify-center shadow-sm group-hover:scale-105 transition-transform">
+                             <span className="material-symbols-outlined text-[20px]">wallet</span>
+                        </div>
+                        <span className="text-[10px] text-center font-medium leading-tight text-[#657b86]">Apple Wallet</span>
+                    </button>
+
+                     {/* Add to Google Wallet */}
+                    <button 
+                       onClick={() => alert('Google Wallet integration requires a backend pass generator service.')}
+                       className="flex flex-col items-center justify-center gap-2 p-3 rounded-lg hover:bg-black/5 dark:hover:bg-white/5 transition-colors group"
+                    >
+                        <div className="w-10 h-10 rounded-full bg-white border border-gray-200 text-[#121517] flex items-center justify-center shadow-sm group-hover:scale-105 transition-transform">
+                             <span className="material-symbols-outlined text-[20px]">account_balance_wallet</span>
+                        </div>
+                        <span className="text-[10px] text-center font-medium leading-tight text-[#657b86]">Google Wallet</span>
+                    </button>
+
+                    {/* Save Image */}
+                    <button 
+                       onClick={handleSaveImage}
+                       className="flex flex-col items-center justify-center gap-2 p-3 rounded-lg hover:bg-black/5 dark:hover:bg-white/5 transition-colors group"
+                    >
+                        <div className="w-10 h-10 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center shadow-sm group-hover:scale-105 transition-transform">
+                             <span className="material-symbols-outlined text-[20px]">{savingImage ? 'downloading' : 'image'}</span>
+                        </div>
+                        <span className="text-[10px] text-center font-medium leading-tight text-[#657b86]">Save Image</span>
+                    </button>
+                 </div>
+
+                <div className="w-full pt-4 border-t border-gray-100 dark:border-white/5">
                     <button
                         onClick={handleShare}
                         className="w-full flex items-center justify-center gap-2 bg-primary text-white py-3 px-6 rounded-xl font-bold hover:bg-[#144f6d] transition-transform active:scale-95 shadow-lg shadow-primary/20"
