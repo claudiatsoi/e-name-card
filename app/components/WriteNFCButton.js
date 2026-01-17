@@ -8,6 +8,7 @@ export default function WriteNFCButton({ className, variant, cardTitle, cardSubt
   const handleWrite = async () => {
     if (!('NDEFReader' in window)) {
       setStatus('unsupported');
+      setErrorMsg("NFC writing is not supported on iOS. Please try Chrome on Android.");
       return;
     }
 
@@ -64,7 +65,24 @@ export default function WriteNFCButton({ className, variant, cardTitle, cardSubt
                  </p>
               </div>
            </button>
-           {status === 'unsupported' && <div className="absolute top-0 right-0 bg-red-100 text-red-600 text-[10px] px-1 rounded">Unsupported</div>}
+           
+           {(status === 'unsupported' || status === 'error') && (
+             <div className="absolute inset-0 bg-white/95 z-20 flex flex-col items-center justify-center text-center p-4 rounded-xl border border-red-200 backdrop-blur-sm">
+                <span className="material-symbols-outlined text-red-500 mb-1 text-2xl">error</span>
+                <p className="text-red-700 text-xs font-bold uppercase tracking-wider mb-1">
+                   {status === 'unsupported' ? 'Not Supported' : 'Write Failed'}
+                </p>
+                <p className="text-[#657b86] text-[10px] leading-tight px-1 mb-2">
+                   {errorMsg || (status === 'unsupported' ? 'NFC writing not available on this device.' : 'An error occurred.')}
+                </p>
+                <button 
+                  onClick={(e) => { e.preventDefault(); e.stopPropagation(); setStatus('idle'); }} 
+                  className="text-[10px] bg-red-50 text-red-600 px-3 py-1.5 rounded-full font-bold uppercase tracking-wide border border-red-100 hover:bg-red-100 transition-colors"
+                >
+                  Dismiss
+                </button>
+             </div>
+           )}
        </div>
     );
   }
@@ -88,10 +106,11 @@ export default function WriteNFCButton({ className, variant, cardTitle, cardSubt
         </button>
         
         {status === 'unsupported' && (
-            <div className="absolute top-full left-0 w-full text-center">
-                <p className="text-[10px] text-red-500 bg-white/90 px-1 rounded shadow-sm inline-block mx-auto mt-1">
-                    Not supported
-                </p>
+            <div className="absolute top-full left-0 w-full text-center z-10 mt-1">
+                <div className="bg-white/95 border border-red-200 p-2 rounded-lg shadow-md mx-auto max-w-[200px] backdrop-blur-sm">
+                   <p className="text-[10px] text-red-600 font-bold mb-1">Not Supported</p>
+                   <p className="text-[9px] text-[#657b86] leading-tight">{errorMsg}</p>
+                </div>
             </div>
         )}
         {status === 'error' && (

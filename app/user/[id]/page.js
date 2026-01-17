@@ -56,7 +56,7 @@ export default async function UserCard({ params }) {
                 <div className="whisper-shadow flex flex-col items-stretch justify-start rounded-xl bg-white dark:bg-[#1f2226] border border-black/5 dark:border-white/5 overflow-hidden">
                     {/* Top Banner (keeping EventX logic but integrated) */}
                     <div className="w-full h-32 bg-white relative flex items-center justify-center p-8 overflow-hidden border-b border-gray-100">
-                        <div className="relative w-40 h-12">
+                        <div className="relative h-10 w-24 shrink-0">
                              <Image 
                                  src="/eventx-logo.png" 
                                  alt="EventX" 
