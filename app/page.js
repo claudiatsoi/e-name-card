@@ -19,6 +19,12 @@ export default function Home() {
             Have a card ID? Visit <span className="font-mono bg-gray-200 px-1 rounded">/user/[id]</span>
         </div>
       </div>
+
+       <div className="absolute bottom-6 text-center">
+            <div className="text-[10px] text-gray-300 font-medium tracking-widest uppercase">
+               Powered by Claudia Tsoi
+            </div>
+       </div>
     </div>
   );
 }

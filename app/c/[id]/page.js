@@ -122,6 +122,12 @@ export default async function InternalSalesCard({ params }) {
                Create Your Own Card
           </Link>
         </div>
+        
+         <div className="pt-4 text-center">
+            <div className="text-[10px] text-gray-300 font-medium tracking-widest uppercase">
+               Powered by Claudia Tsoi
+            </div>
+         </div>
       </div>
     </div>
   );

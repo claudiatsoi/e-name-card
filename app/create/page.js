@@ -1,6 +1,7 @@
 'use client';
 import { useState, useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
+import Image from 'next/image';
 
 function CreateCardContent() {
   const router = useRouter();
@@ -58,7 +59,22 @@ function CreateCardContent() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gray-50 flex items-center justifoverflow-hidden">
+        
+        {/* Top Banner Decoration */}
+         <div className="h-32 bg-white relative flex items-center justify-center border-b border-gray-100">
+             <div className="relative w-40 h-12">
+                <Image 
+                    src="/eventx-logo.png" 
+                    alt="EventX" 
+                    fill 
+                    className="object-contain" // Keep logo original color
+                    priority
+                /> 
+             </div>
+         </div>
+
+        <div className="y-center p-4">
       <div className="bg-white shadow-lg rounded-xl w-full max-w-md p-8">
         <h1 className="text-2xl font-bold text-center mb-6 text-gray-800">Create Your Card</h1>
         
@@ -134,7 +150,14 @@ function CreateCardContent() {
                Referred by: {referredBy}
             </div>
           )}
-
+  </div>
+        
+        <div className="pb-6 text-center">
+            <div className="text-[10px] text-gray-300 font-medium tracking-widest uppercase">
+               Powered by Claudia Tsoi
+            </div>
+         </div>
+      
           <button 
             type="submit" 
             disabled={status === 'loading'}
