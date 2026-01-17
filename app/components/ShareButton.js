@@ -38,7 +38,23 @@ export default function ShareButton({ title, text, url, className, variant, card
      const node = document.getElementById('user-card-visual');
      try {
        if (node) {
-          const dataUrl = await toPng(node, { cacheBust: true, backgroundColor: '#ffffff', pixelRatio: 3 });
+          const dataUrl = await toPng(node, { 
+              cacheBust: true, 
+              backgroundColor: '#ffffff', 
+              pixelRatio: 3,
+              skipAutoScale: true,
+              onClone: (clonedNode) => {
+                  // Fix for images not loading in screenshot
+                  const images = clonedNode.getElementsByTagName('img');
+                  for (let i = 0; i < images.length; i++) {
+                      images[i].crossOrigin = 'anonymous';
+                      // Important for Next.js images to ensure they are captured
+                      if (images[i].loading === 'lazy') {
+                          images[i].loading = 'eager';
+                      }
+                  }
+              }
+          });
           setGeneratedImage(dataUrl);
        } else {
           console.warn('Card element not found');
