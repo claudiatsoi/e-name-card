@@ -130,7 +130,7 @@ export default async function UserCard({ params }) {
                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                </svg>
-               Create New
+               Create a New Card
             </Link>
             
             <SaveContactButton 
@@ -139,11 +139,16 @@ export default async function UserCard({ params }) {
                 company={company}
                 phone={fullPhone}
                 email={email}
-                className="col-span-2 bg-white border border-gray-200 text-gray-900 rounded-xl flex flex-col items-center justify-center py-4 gap-2 shadow-sm active:scale-95 transition-all text-xs font-bold hover:bg-gray-50"
+                // Save Contact: Red, Phonebook Icon will be in component if default, or via children?
+                // The component does NOT accept children or custom icon prop currently.
+                // We will change the component to accept classes and render the red style + phonebook icon.
+                // Passing red class here:
+                className="col-span-2 bg-red-600 border border-red-600 text-white rounded-xl flex flex-col items-center justify-center py-4 gap-2 shadow-sm active:scale-95 transition-all text-xs font-bold hover:bg-red-700"
             />
 
             <WriteNFCButton 
-                className="col-span-2 bg-white border border-gray-200 text-gray-900 rounded-xl flex flex-col items-center justify-center py-4 gap-2 shadow-sm active:scale-95 transition-all text-xs font-bold hover:bg-gray-50"
+                // Write NFC: Yellow, Wifi Icon, Full Width (col-span-2)
+                className="col-span-2 bg-yellow-400 border border-yellow-400 text-yellow-900 rounded-xl flex flex-col items-center justify-center py-4 gap-2 shadow-sm active:scale-95 transition-all text-xs font-bold hover:bg-yellow-500"
             />
          </div>
          
