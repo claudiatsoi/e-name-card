@@ -43,13 +43,13 @@ export default async function UserCard({ params }) {
        <div className="bg-white shadow-xl rounded-[2rem] w-full max-w-sm overflow-hidden border border-gray-100 relative">
          
          {/* Top Banner Decoration */}
-         <div className="h-32 bg-gray-900 relative flex items-center justify-center">
-             <div className="relative w-40 h-10">
+         <div className="h-32 bg-white relative flex items-center justify-center">
+             <div className="relative w-40 h-12">
                 <Image 
                     src="/eventx-logo.png" 
                     alt="EventX" 
                     fill 
-                    className="object-contain invert brightness-0 invert" // Make logo white if it's black, assuming it needs contrast on dark bg
+                    className="object-contain"
                     priority
                 /> 
              </div>
@@ -122,20 +122,7 @@ export default async function UserCard({ params }) {
                 url={`https://e-name-card-hazel.claunode.com/user/${id}`} 
                 className="bg-gray-900 border border-gray-900 text-white rounded-xl flex flex-col items-center justify-center py-4 gap-2 shadow-sm active:scale-95 transition-all text-xs font-bold hover:bg-gray-800"
             />
-            
-            <SaveContactButton 
-                name={name}
-                title={title}
-                company={company}
-                phone={fullPhone}
-                email={email}
-                className="bg-white border border-gray-200 text-gray-900 rounded-xl flex flex-col items-center justify-center py-4 gap-2 shadow-sm active:scale-95 transition-all text-xs font-bold hover:bg-gray-50"
-            />
 
-            <WriteNFCButton 
-                className="bg-white border border-gray-200 text-gray-900 rounded-xl flex flex-col items-center justify-center py-4 gap-2 shadow-sm active:scale-95 transition-all text-xs font-bold hover:bg-gray-50"
-            />
-            
             <Link 
               href={`/create?ref=${id}`} 
               className="bg-white border border-gray-200 text-gray-400 rounded-xl flex flex-col items-center justify-center py-4 gap-2 shadow-sm active:scale-95 transition-all text-xs font-bold hover:text-blue-600 hover:border-blue-100"
@@ -145,6 +132,19 @@ export default async function UserCard({ params }) {
                </svg>
                Create New
             </Link>
+            
+            <SaveContactButton 
+                name={name}
+                title={title}
+                company={company}
+                phone={fullPhone}
+                email={email}
+                className="col-span-2 bg-white border border-gray-200 text-gray-900 rounded-xl flex flex-col items-center justify-center py-4 gap-2 shadow-sm active:scale-95 transition-all text-xs font-bold hover:bg-gray-50"
+            />
+
+            <WriteNFCButton 
+                className="col-span-2 bg-white border border-gray-200 text-gray-900 rounded-xl flex flex-col items-center justify-center py-4 gap-2 shadow-sm active:scale-95 transition-all text-xs font-bold hover:bg-gray-50"
+            />
          </div>
          
          <div className="pb-6 text-center">
