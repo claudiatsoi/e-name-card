@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { getSheet } from '@/lib/googleSheet';
 import { notFound } from 'next/navigation';
 import SaveContactButton from '@/app/components/SaveContactButton';
@@ -59,10 +60,17 @@ export default async function UserCard({ params }) {
                 phone={phone}
                 email={email}
             />
+            
+            <Link 
+              href={`/create?ref=${id}`} 
+              className="block mt-4 w-full bg-gray-200 text-gray-700 font-bold py-3 px-4 rounded-lg hover:bg-gray-300 transition duration-300 text-center"
+            >
+               Create New Card
+            </Link>
          </div>
          
-         <div className="mt-4 text-xs text-gray-400">
-            Powered by E-name-card
+         <div className="mt-8 text-xs text-gray-400">
+            Powered by Claudia Tsoi
          </div>
        </div>
     </div>
