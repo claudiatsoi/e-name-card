@@ -164,7 +164,7 @@ function CreateCardContent() {
                         <div className="flex items-center gap-4">
                             {formData.avatar && (
                                 <div className="relative w-12 h-12 rounded-full overflow-hidden border border-[#dae5e7]">
-                                    <Image src={formData.avatar} alt="Preview" fill className="object-cover" />
+                                    <Image src={formData.avatar} alt="Preview" fill className="object-cover" unoptimized />
                                 </div>
                             )}
                             <label className={`flex items-center justify-center h-12 px-4 rounded-lg border border-[#dae5e7] dark:border-primary/20 bg-background-light dark:bg-background-dark/40 cursor-pointer hover:bg-black/5 transition-colors ${uploading ? 'opacity-50 cursor-not-allowed' : ''}`}>
