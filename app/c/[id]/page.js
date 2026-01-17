@@ -25,7 +25,7 @@ export default async function InternalSalesCard({ params }) {
     return notFound();
   }
 
-  const get = (key) => row.get(key) || '';
+  const get = (key) => row.get(key) || row.get(key.toLowerCase()) || row.get(key.toUpperCase()) || row.get(key.replace('_', ' ')) || '';
 
   const name = get('name');
   const title = get('title');
@@ -33,8 +33,8 @@ export default async function InternalSalesCard({ params }) {
   const phone = String(get('phone') || '').trim();
   const email = get('email');
   const linkedin = get('linkedin') || get('LinkedIn URL') || '';
-  const areaCode = String(get('area_code') || '').trim();
-  const isWhatsapp = String(get('is_whatsapp') || '').trim().toLowerCase() === 'true';
+  const areaCode = String(get('area_code') || get('Area Code') || get('Area_Code') || '').trim();
+  const isWhatsapp = String(get('is_whatsapp') || get('Is Whatsapp') || '').trim().toLowerCase() === 'true';
 
   const fullPhone = areaCode ? `${areaCode}${phone}` : phone;
   const whatsappUrl = isWhatsapp ? `https://wa.me/${fullPhone.replace(/[^0-9]/g,'')}` : '';
