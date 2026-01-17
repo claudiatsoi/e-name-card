@@ -28,9 +28,9 @@ export default async function UserCard({ params }) {
   const name = get('name');
   const title = get('title');
   const company = get('company');
-  const phone = get('phone');
+  const phone = String(get('phone') || '').trim();
   const email = get('email');
-  const areaCode = get('area_code');
+  const areaCode = String(get('area_code') || '').trim();
   const isWhatsapp = String(get('is_whatsapp') || '').trim().toLowerCase() === 'true';
 
   const fullPhone = areaCode ? `${areaCode}${phone}` : phone;

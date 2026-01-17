@@ -2,8 +2,17 @@
 
 export default function SaveContactButton({ name, company, title, phone, email }) {
   const handleSave = () => {
+    // Split name efficiently for vCard "N" field (Family Name; Given Name; ...)
+    const parts = name ? name.trim().split(' ') : [];
+    const lastName = parts.length > 1 ? parts.pop() : '';
+    const firstName = parts.join(' ');
+    // If only one name, put it in key name properties
+    const finalFirstName = firstName || name; 
+    const finalLastName = lastName;
+
     const vCardData = `BEGIN:VCARD
 VERSION:3.0
+N:${finalLastName};${finalFirstName};;;
 FN:${name}
 ORG:${company}
 TITLE:${title}
