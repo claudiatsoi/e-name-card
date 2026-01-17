@@ -73,46 +73,43 @@ export default async function UserCard({ params }) {
                         </div>
                     </a>
                     
-                    <div className="flex w-full flex-col items-start justify-center gap-6 px-6 py-8 min-h-[200px]">
-                        <div className="flex w-full justify-between items-stretch gap-2">
-                            <div className="flex-1 flex flex-col gap-6">
-                                <div>
-                                    <h1 className="text-[#121517] text-2xl font-extrabold leading-tight tracking-[-0.02em] break-words pr-2">{name}</h1>
-                                    <p className="text-primary text-base font-medium mt-1">{title}</p>
-                                    <p className="text-[#657b86] text-sm font-normal mt-1">{company}</p>
-                                </div>
-
-                                {bio && (
-                                    <div className="w-full">
-                                        <p className="text-[#657b86] text-sm leading-relaxed whitespace-pre-wrap italic">
-                                            "{bio}"
-                                        </p>
-                                    </div>
-                                )}
-                            </div>
-                            
-                            <div className="flex flex-col items-end justify-between gap-3 shrink-0">
-                                <div className="p-1 bg-white">
-                                    <QRCodeSVG 
-                                        value={`https://name-card.claunode.com/user/${id}`}
-                                        size={48}
-                                        level="L"
-                                        fgColor="#121517"
+                    <div className="flex w-full flex-col items-start justify-center gap-6 px-8 py-8 min-h-[200px]">
+                        <div className="flex w-full justify-between items-start">
+                             {avatar ? (
+                                <div className="relative w-24 h-24 rounded-full overflow-hidden border-4 border-white shadow-lg">
+                                    <Image 
+                                        src={avatar}
+                                        alt={name}
+                                        fill
+                                        className="object-cover"
+                                        unoptimized
                                     />
                                 </div>
-                                {avatar && (
-                                    <div className="relative w-24 h-24 rounded-full overflow-hidden border-4 border-white shadow-lg mt-auto">
-                                        <Image 
-                                            src={avatar}
-                                            alt={name}
-                                            fill
-                                            className="object-cover"
-                                            unoptimized
-                                        />
-                                    </div>
-                                )}
-                            </div>
+                             ) : <div></div>}
+                             
+                             <div className="p-1 bg-white">
+                                <QRCodeSVG 
+                                    value={`https://name-card.claunode.com/user/${id}`}
+                                    size={48}
+                                    level="L"
+                                    fgColor="#121517"
+                                />
+                             </div>
                         </div>
+
+                        <div className="w-full">
+                            <h1 className="text-[#121517] text-3xl font-extrabold leading-tight tracking-[-0.02em]">{name}</h1>
+                            <p className="text-primary text-lg font-medium mt-1">{title}</p>
+                            <p className="text-[#657b86] text-base font-normal mt-1">{company}</p>
+                        </div>
+
+                        {bio && (
+                            <div className="w-full">
+                                <p className="text-[#657b86] text-sm leading-relaxed whitespace-pre-wrap italic">
+                                    "{bio}"
+                                </p>
+                            </div>
+                        )}
                         
                         <div className="w-full space-y-3 pt-4 border-t border-gray-100 flex-1">
                             <div className="flex items-center gap-3">
