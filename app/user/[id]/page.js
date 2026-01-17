@@ -90,15 +90,15 @@ export default async function UserCard({ params }) {
                                 <a href={`mailto:${email}`} className="text-[#121517] dark:text-white/80 text-sm font-medium hover:text-primary">{email}</a>
                             </div>
                         </div>
-
-                        <div className="w-full pt-4">
-                            <Link href="/create" className="w-full flex cursor-pointer items-center justify-center gap-2 overflow-hidden rounded-lg h-12 px-6 bg-primary text-white text-base font-bold transition-transform active:scale-95 shadow-lg shadow-primary/20 hover:bg-[#144f6d]">
-                                <span>Create Your Own</span>
-                                <span className="material-symbols-outlined text-lg">arrow_forward</span>
-                            </Link>
-                        </div>
                     </div>
                 </div>
+            </div>
+
+            <div className="mt-6 w-full px-2">
+                <Link href="/create" className="w-full flex cursor-pointer items-center justify-center gap-2 overflow-hidden rounded-lg h-12 px-6 bg-primary text-white text-base font-bold transition-transform active:scale-95 shadow-lg shadow-primary/20 hover:bg-[#144f6d]">
+                    <span>Create Your Own</span>
+                    <span className="material-symbols-outlined text-lg">arrow_forward</span>
+                </Link>
             </div>
 
             {/* Quick Actions Header */}

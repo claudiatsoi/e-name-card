@@ -8,6 +8,7 @@ export default function ShareButton({ title, text, url, className, variant, card
   const [copied, setCopied] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [savingImage, setSavingImage] = useState(false);
+  const [generatedImage, setGeneratedImage] = useState(null);
 
   const handleShare = async () => {
     if (navigator.share) {
@@ -33,12 +34,11 @@ export default function ShareButton({ title, text, url, className, variant, card
 
   const handleSaveImage = async () => {
      setSavingImage(true);
-     // Try to find the visual card element
      const node = document.getElementById('user-card-visual');
      try {
        if (node) {
-          const dataUrl = await toPng(node, { cacheBust: true, backgroundColor: '#ffffff' });
-          download(dataUrl, 'name-card.png');
+          const dataUrl = await toPng(node, { cacheBust: true, backgroundColor: '#ffffff', pixelRatio: 3 });
+          setGeneratedImage(dataUrl);
        } else {
           console.warn('Card element not found');
        }
@@ -47,10 +47,6 @@ export default function ShareButton({ title, text, url, className, variant, card
      } finally {
        setSavingImage(false);
      }
-  };
-
-  const handleWallet = () => {
-     alert("Wallet passes require manual setup or a backend service. This is a UI placeholder.");
   };
 
   if (variant === 'card') {
@@ -68,51 +64,77 @@ export default function ShareButton({ title, text, url, className, variant, card
 
        {showModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm" onClick={() => setShowModal(false)}>
-            <div className="bg-white dark:bg-[#1f2226] rounded-2xl w-full max-w-[340px] p-6 shadow-2xl relative flex flex-col items-center gap-6 animate-in fade-in zoom-in-95 duration-200" onClick={e => e.stopPropagation()}>
-                <button onClick={() => setShowModal(false)} className="absolute top-4 right-4 p-2 rounded-full hover:bg-black/5 dark:hover:bg-white/10 transition-colors">
+            <div className={`bg-white dark:bg-[#1f2226] rounded-2xl w-full ${generatedImage ? 'max-w-md' : 'max-w-[340px]'} p-6 shadow-2xl relative flex flex-col items-center gap-6 animate-in fade-in zoom-in-95 duration-200 transition-all`} onClick={e => e.stopPropagation()}>
+                <button onClick={() => setShowModal(false)} className="absolute top-4 right-4 p-2 rounded-full hover:bg-black/5 dark:hover:bg-white/10 transition-colors z-10">
                     <span className="material-symbols-outlined text-gray-400">close</span>
                 </button>
                 
-                <div className="text-center mt-2">
-                    <h3 className="text-xl font-bold text-[#121517] dark:text-white mb-1">Scan to Connect</h3>
-                    <p className="text-sm text-[#657b86] dark:text-white/60">Share this profile seamlessly</p>
-                </div>
-
-                <div className="bg-white p-4 rounded-xl border border-gray-100 shadow-inner">
-                    <QRCodeSVG value={url} size={160} />
-                </div>
-
-                {/* Additional Action Grid */}
-                 <div className="flex w-full justify-center">
-                    {/* Save Image - Centered and Larger */}
-                    <button 
-                       onClick={handleSaveImage}
-                       className="flex flex-col items-center justify-center gap-2 p-3 rounded-lg hover:bg-black/5 dark:hover:bg-white/5 transition-colors group w-1/3"
-                    >
-                        <div className="w-12 h-12 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center shadow-lg group-hover:scale-105 transition-transform">
-                             <span className="material-symbols-outlined text-[24px]">{savingImage ? 'downloading' : 'image'}</span>
+                {generatedImage ? (
+                    <div className="flex flex-col items-center gap-4 w-full animate-in fade-in slide-in-from-bottom-4 duration-300">
+                        <div className="text-center pt-2">
+                             <h3 className="text-xl font-bold text-[#121517] dark:text-white mb-1">Save Card</h3>
+                             <p className="text-sm text-primary font-bold animate-pulse">Long press image to save</p>
                         </div>
-                        <span className="text-[11px] text-center font-bold text-[#657b86]">Save to Album</span>
-                 </div>
+                        <div className="w-full max-h-[60vh] overflow-y-auto rounded-xl shadow-lg border border-gray-100 p-2 bg-gray-50/50">
+                            <img src={generatedImage} alt="Digital Card" className="w-full h-auto rounded-lg" />
+                        </div>
+                        <button 
+                            onClick={() => setGeneratedImage(null)}
+                            className="text-sm text-[#657b86] hover:text-[#121517] dark:text-white/60 dark:hover:text-white font-bold underline py-2"
+                        >
+                            Back to QR Code
+                        </button>
+                    </div>
+                ) : (
+                    <>
+                    <div className="text-center mt-2">
+                        <h3 className="text-xl font-bold text-[#121517] dark:text-white mb-1">Scan to Connect</h3>
+                        <p className="text-sm text-[#657b86] dark:text-white/60">Share this profile seamlessly</p>
+                    </div>
 
-                <div className="w-full pt-4 border-t border-gray-100 dark:border-white/5">
-                    <button
-                        onClick={handleShare}
-                        className="w-full flex items-center justify-center gap-2 bg-primary text-white py-3 px-6 rounded-xl font-bold hover:bg-[#144f6d] transition-transform active:scale-95 shadow-lg shadow-primary/20"
-                    >
-                        {copied ? (
-                            <>
-                                <span className="material-symbols-outlined text-[20px]">check</span>
-                                <span>Link Copied!</span>
-                            </>
-                        ) : (
-                            <>
-                                <span className="material-symbols-outlined text-[20px]">ios_share</span>
-                                <span>Share Page Link</span>
-                            </>
-                        )}
-                    </button>
-                </div>
+                    <div className="bg-white p-4 rounded-xl border border-gray-100 shadow-inner">
+                        <QRCodeSVG value={url} size={160} />
+                    </div>
+
+                    <div className="flex w-full justify-center">
+                        <button 
+                        onClick={handleSaveImage}
+                        className="flex flex-col items-center justify-center gap-2 p-3 rounded-lg hover:bg-black/5 dark:hover:bg-white/5 transition-colors group w-1/3"
+                        disabled={savingImage}
+                        >
+                            {savingImage ? (
+                                <div className="w-12 h-12 rounded-full bg-blue-50 flex items-center justify-center">
+                                    <span className="material-symbols-outlined text-[24px] text-blue-600 animate-spin">progress_activity</span>
+                                </div>
+                            ) : (
+                                <div className="w-12 h-12 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center shadow-lg group-hover:scale-105 transition-transform">
+                                    <span className="material-symbols-outlined text-[24px]">image</span>
+                                </div>
+                            )}
+                            <span className="text-[11px] text-center font-bold text-[#657b86]">Save to Album</span>
+                        </button>
+                    </div>
+
+                    <div className="w-full pt-4 border-t border-gray-100 dark:border-white/5">
+                        <button
+                            onClick={handleShare}
+                            className="w-full flex items-center justify-center gap-2 bg-primary text-white py-3 px-6 rounded-xl font-bold hover:bg-[#144f6d] transition-transform active:scale-95 shadow-lg shadow-primary/20"
+                        >
+                            {copied ? (
+                                <>
+                                    <span className="material-symbols-outlined text-[20px]">check</span>
+                                    <span>Link Copied!</span>
+                                </>
+                            ) : (
+                                <>
+                                    <span className="material-symbols-outlined text-[20px]">ios_share</span>
+                                    <span>Share Page Link</span>
+                                </>
+                            )}
+                        </button>
+                    </div>
+                    </>
+                )}
             </div>
         </div>
        )}
