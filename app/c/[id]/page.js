@@ -71,7 +71,7 @@ export default async function InternalSalesCard({ params }) {
                         </div>
                     </a>
                     
-                    <div className="flex w-full flex-col items-start justify-center gap-6 p-8 min-h-[200px]">
+                    <div className="flex w-full flex-col items-start justify-center gap-6 pl-8 pr-3 py-8 min-h-[200px]">
                         <div className="flex w-full justify-between items-stretch gap-4">
                             <div className="flex-1">
                                 <div>
@@ -80,7 +80,7 @@ export default async function InternalSalesCard({ params }) {
                                     <p className="text-[#657b86] text-base font-normal mt-1">{company}</p>
                                 </div>
                             </div>
-                            <div className="flex flex-col items-center justify-between gap-3 shrink-0">
+                            <div className="flex flex-col items-end justify-between gap-3 shrink-0">
                                 <div className="p-1 bg-white">
                                     <QRCodeSVG 
                                         value={`https://name-card.claunode.com/c/${id}`}
