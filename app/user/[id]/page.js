@@ -114,8 +114,8 @@ export default async function UserCard({ params }) {
                     title={`${name} - ${title}`} 
                     text={`Here's ${name} business card!`} 
                     url={`https://e-name-card-hazel.claunode.com/user/${id}`} 
-                    cardTitle="Share via QR"
-                    cardSubtitle="Scan to connect"
+                    cardTitle="Share"
+                    cardSubtitle="Via QR or Link"
                 />
                 
                 <SaveContactButton 

@@ -1,8 +1,10 @@
 'use client';
 import { useState } from 'react';
+import { QRCodeSVG } from 'qrcode.react';
 
 export default function ShareButton({ title, text, url, className, variant, cardTitle, cardSubtitle }) {
   const [copied, setCopied] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
   const handleShare = async () => {
     if (navigator.share) {
@@ -29,15 +31,55 @@ export default function ShareButton({ title, text, url, className, variant, card
 
   if (variant === 'card') {
     return (
-       <button onClick={handleShare} className="flex flex-1 gap-4 rounded-xl border border-black/5 bg-white p-5 flex-col whisper-shadow active:bg-primary/5 transition-colors cursor-pointer text-left w-full h-full hover:shadow-md">
+       <>
+       <button onClick={() => setShowModal(true)} className="flex flex-1 gap-4 rounded-xl border border-black/5 bg-white p-5 flex-col whisper-shadow active:bg-primary/5 transition-colors cursor-pointer text-left w-full h-full hover:shadow-md">
           <div className="text-primary bg-primary/10 size-10 rounded-lg flex items-center justify-center">
-             <span className="material-symbols-outlined">{copied ? 'check' : 'ios_share'}</span>
+             <span className="material-symbols-outlined">qr_code_2</span>
           </div>
           <div className="flex flex-col gap-0.5">
-             <h2 className="text-[#121517] text-base font-bold leading-tight">{copied ? 'Copied!' : (cardTitle || 'Share Card')}</h2>
-             <p className="text-[#657b86] text-xs font-normal leading-normal">{copied ? 'Link in clipboard' : (cardSubtitle || 'Share via Link')}</p>
+             <h2 className="text-[#121517] text-base font-bold leading-tight">{cardTitle || 'Share'}</h2>
+             <p className="text-[#657b86] text-xs font-normal leading-normal">{cardSubtitle || 'QR Code & Link'}</p>
           </div>
        </button>
+
+       {showModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm" onClick={() => setShowModal(false)}>
+            <div className="bg-white dark:bg-[#1f2226] rounded-2xl w-full max-w-[320px] p-6 shadow-2xl relative flex flex-col items-center gap-6 animate-in fade-in zoom-in-95 duration-200" onClick={e => e.stopPropagation()}>
+                <button onClick={() => setShowModal(false)} className="absolute top-4 right-4 p-2 rounded-full hover:bg-black/5 dark:hover:bg-white/10 transition-colors">
+                    <span className="material-symbols-outlined text-gray-400">close</span>
+                </button>
+                
+                <div className="text-center mt-2">
+                    <h3 className="text-xl font-bold text-[#121517] dark:text-white mb-1">Scan to Connect</h3>
+                    <p className="text-sm text-[#657b86] dark:text-white/60">Share this profile via QR Code</p>
+                </div>
+
+                <div className="bg-white p-4 rounded-xl border border-gray-100 shadow-inner">
+                    <QRCodeSVG value={url} size={180} />
+                </div>
+
+                <div className="w-full pt-2 border-t border-gray-100 dark:border-white/5">
+                    <button
+                        onClick={handleShare}
+                        className="w-full flex items-center justify-center gap-2 bg-primary text-white py-3 px-6 rounded-xl font-bold hover:bg-[#144f6d] transition-transform active:scale-95 shadow-lg shadow-primary/20"
+                    >
+                        {copied ? (
+                            <>
+                                <span className="material-symbols-outlined text-[20px]">check</span>
+                                <span>Link Copied!</span>
+                            </>
+                        ) : (
+                            <>
+                                <span className="material-symbols-outlined text-[20px]">ios_share</span>
+                                <span>Share Page Link</span>
+                            </>
+                        )}
+                    </button>
+                </div>
+            </div>
+        </div>
+       )}
+       </>
     );
   }
 
