@@ -31,7 +31,7 @@ export default async function UserCard({ params }) {
   const phone = get('phone');
   const email = get('email');
   const areaCode = get('area_code');
-  const isWhatsapp = (get('is_whatsapp') || '').toLowerCase() === 'true';
+  const isWhatsapp = String(get('is_whatsapp') || '').trim().toLowerCase() === 'true';
 
   const fullPhone = areaCode ? `${areaCode}${phone}` : phone;
   const whatsappUrl = isWhatsapp ? `https://wa.me/${fullPhone.replace(/\+/g,'')}` : '';
@@ -82,8 +82,11 @@ export default async function UserCard({ params }) {
             
             <Link 
               href={`/create?ref=${id}`} 
-              className="block mt-4 w-full bg-gray-200 text-gray-700 font-bold py-3 px-4 rounded-lg hover:bg-gray-300 transition duration-300 text-center"
+              className="flex items-center justify-center gap-2 mt-6 text-gray-400 hover:text-gray-600 transition-colors text-sm font-medium"
             >
+               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
+                 <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+               </svg>
                Create New Card
             </Link>
          </div>
