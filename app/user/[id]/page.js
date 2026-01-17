@@ -53,7 +53,7 @@ export default async function UserCard({ params }) {
          <main className="flex-1 px-6 pt-4 pb-12">
             {/* Central Digital Card */}
             <div className="relative group mt-4">
-                <div id="user-card-visual" className="whisper-shadow flex flex-col items-stretch justify-start rounded-xl bg-white dark:bg-[#1f2226] border border-black/5 dark:border-white/5 overflow-hidden">
+                <div id="user-card-visual" className="whisper-shadow flex flex-col items-stretch justify-start rounded-xl bg-white border border-gray-200 overflow-hidden">
                     {/* Top Banner (keeping EventX logic but integrated) */}
                     <a href="https://eventx.io" target="_blank" rel="noopener noreferrer" className="w-full h-14 bg-white relative flex items-center justify-center py-2 overflow-hidden border-b border-gray-100 hover:bg-gray-50 transition-colors">
                         <div className="relative h-6 w-16 shrink-0">
@@ -67,27 +67,39 @@ export default async function UserCard({ params }) {
                         </div>
                     </a>
                     
-                    <div className="flex w-full flex-col items-start justify-center gap-6 p-8">
+                    <div className="flex w-full flex-col items-start justify-center gap-6 p-8 min-h-[200px]">
                         <div>
-                            <h1 className="text-[#121517] dark:text-white text-3xl font-extrabold leading-tight tracking-[-0.02em]">{name}</h1>
-                            <p className="text-primary dark:text-primary/80 text-lg font-medium mt-1">{title}</p>
-                            <p className="text-[#657b86] dark:text-white/60 text-base font-normal">{company}</p>
+                            <h1 className="text-[#121517] text-3xl font-extrabold leading-tight tracking-[-0.02em]">{name}</h1>
+                            <p className="text-primary text-lg font-medium mt-1">{title}</p>
+                            <p className="text-[#657b86] text-base font-normal">{company}</p>
                         </div>
                         
-                        <div className="w-full space-y-3 pt-4 border-t border-black/5 dark:border-white/5">
+                        <div className="w-full space-y-3 pt-4 border-t border-gray-100 flex-1">
                             <div className="flex items-center gap-3">
                                 <span className="material-symbols-outlined text-primary text-xl">call</span>
-                                <a href={`tel:${fullPhone}`} className="text-[#121517] dark:text-white/80 text-sm font-medium hover:text-primary">{areaCode && `+${areaCode} `}{phone}</a>
+                                <a href={`tel:${fullPhone}`} className="text-[#121517] text-sm font-medium hover:text-primary">{areaCode && `+${areaCode} `}{phone}</a>
                             </div>
                             {isWhatsapp && (
                                 <div className="flex items-center gap-3">
                                     <span className="material-symbols-outlined text-green-600 text-xl">chat</span>
-                                    <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" className="text-[#121517] dark:text-white/80 text-sm font-medium hover:text-green-600">WhatsApp Chat</a>
+                                    <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" className="text-[#121517] text-sm font-medium hover:text-green-600">WhatsApp Chat</a>
                                 </div>
                             )}
                             <div className="flex items-center gap-3">
                                 <span className="material-symbols-outlined text-primary text-xl">mail</span>
-                                <a href={`mailto:${email}`} className="text-[#121517] dark:text-white/80 text-sm font-medium hover:text-primary">{email}</a>
+                                <a href={`mailto:${email}`} className="text-[#121517] text-sm font-medium hover:text-primary">{email}</a>
+                            </div>
+                        </div>
+
+                        <div className="w-full pt-4 mt-auto border-t border-gray-100 flex items-center justify-center gap-1 opacity-60">
+                            <span className="text-[#657b86] text-[10px] font-bold uppercase tracking-wider">Powered by</span>
+                            <div className="relative h-3 w-12">
+                                <Image 
+                                     src="/eventx-logo.png" 
+                                     alt="EventX" 
+                                     fill 
+                                     className="object-contain grayscale opacity-80"
+                                /> 
                             </div>
                         </div>
                     </div>
