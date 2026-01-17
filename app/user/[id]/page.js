@@ -39,18 +39,22 @@ export default async function UserCard({ params }) {
 
   return (
     <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4 font-sans">
-       <div className="bg-white shadow-xl rounded-[2rem] w-full max-w-sm overflow-hidden border border-gray-100">
+       <div className="bg-white shadow-xl rounded-[2rem] w-full max-w-sm overflow-hidden border border-gray-100 relative">
          
          {/* Top Banner Decoration */}
-         <div className="h-32 bg-gray-900 relative">
-             <div className="absolute inset-0 opacity-20 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]"></div>
+         <div className="h-32 bg-gray-900 relative flex items-center justify-center">
+             <div className="relative w-40 h-10">
+                <Image 
+                    src="/eventx-logo.png" 
+                    alt="EventX" 
+                    fill 
+                    className="object-contain invert brightness-0 invert" // Make logo white if it's black, assuming it needs contrast on dark bg
+                    priority
+                /> 
+             </div>
          </div>
 
-         <div className="px-6 pb-6 -mt-16 text-center">
-             <div className="w-32 h-32 bg-white rounded-full mx-auto flex items-center justify-center text-5xl font-bold text-gray-800 shadow-xl border-4 border-white mb-4">
-                 {name.charAt(0)}
-             </div>
-             
+         <div className="px-6 pb-6 pt-6 text-center">
              <h1 className="text-2xl font-bold text-gray-900">{name}</h1>
              <p className="text-blue-600 font-bold text-sm tracking-wide uppercase mt-1">{title}</p>
              <p className="text-gray-500 text-sm mt-1">{company}</p>
