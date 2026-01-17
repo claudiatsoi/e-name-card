@@ -3,6 +3,19 @@ import { useState, useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Image from 'next/image';
 
+const AREA_CODES = [
+  { value: '852', label: '+852 (HK)' },
+  { value: '86', label: '+86 (CN)' },
+  { value: '853', label: '+853 (MO)' },
+  { value: '886', label: '+886 (TW)' },
+  { value: '65', label: '+65 (SG)' },
+  { value: '81', label: '+81 (JP)' },
+  { value: '82', label: '+82 (KR)' },
+  { value: '1', label: '+1 (US/CA)' },
+  { value: '44', label: '+44 (UK)' },
+  { value: '61', label: '+61 (AU)' },
+];
+
 function CreateCardContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -13,9 +26,12 @@ function CreateCardContent() {
     title: '',
     company: '',
     phone: '',
-    area_code: '',
+    area_code: '852',
     is_whatsapp: false,
     email: '',
+    linkedin: '',
+    others: '',
+    bio: '',
   });
   const [status, setStatus] = useState('idle'); // idle, loading, success, error
   const [errorMsg, setErrorMsg] = useState('');
@@ -154,14 +170,19 @@ function CreateCardContent() {
                     <label className="flex flex-col w-full">
                          <p className="text-[#5e888d] dark:text-[#a0c4c8] text-[11px] font-bold uppercase tracking-wider pb-2">Phone</p>
                          <div className="flex gap-2">
-                             <input 
+                             <select 
                                 name="area_code" 
-                                type="text" 
-                                placeholder="852"
-                                className="w-20 rounded-lg text-[#101818] dark:text-white focus:outline-0 focus:ring-1 focus:ring-primary border border-[#dae5e7] dark:border-primary/20 bg-background-light dark:bg-background-dark/40 h-12 placeholder:text-[#dae5e7] p-4 text-base font-normal" 
+                                required
+                                className="w-32 rounded-lg text-[#101818] dark:text-white focus:outline-0 focus:ring-1 focus:ring-primary border border-[#dae5e7] dark:border-primary/20 bg-background-light dark:bg-background-dark/40 h-12 px-4 text-base font-normal"
                                 value={formData.area_code} 
                                 onChange={handleChange}
-                             />
+                             >
+                                {AREA_CODES.map((option) => (
+                                    <option key={option.value} value={option.value}>
+                                        {option.label}
+                                    </option>
+                                ))}
+                             </select>
                              <input 
                                 name="phone" 
                                 type="tel" 
@@ -195,6 +216,41 @@ function CreateCardContent() {
                             className="w-full rounded-lg text-[#101818] dark:text-white focus:outline-0 focus:ring-1 focus:ring-primary border border-[#dae5e7] dark:border-primary/20 bg-background-light dark:bg-background-dark/40 h-12 placeholder:text-[#dae5e7] p-4 text-base font-normal" 
                             placeholder="Email Address" 
                             value={formData.email} 
+                            onChange={handleChange}
+                        />
+                    </label>
+
+                    <label className="flex flex-col w-full">
+                        <p className="text-[#5e888d] dark:text-[#a0c4c8] text-[11px] font-bold uppercase tracking-wider pb-2">LinkedIn (Optional)</p>
+                        <input 
+                            name="linkedin" 
+                            type="url" 
+                            className="w-full rounded-lg text-[#101818] dark:text-white focus:outline-0 focus:ring-1 focus:ring-primary border border-[#dae5e7] dark:border-primary/20 bg-background-light dark:bg-background-dark/40 h-12 placeholder:text-[#dae5e7] p-4 text-base font-normal" 
+                            placeholder="https://linkedin.com/in/..." 
+                            value={formData.linkedin} 
+                            onChange={handleChange}
+                        />
+                    </label>
+
+                    <label className="flex flex-col w-full">
+                        <p className="text-[#5e888d] dark:text-[#a0c4c8] text-[11px] font-bold uppercase tracking-wider pb-2">Other URL (Optional)</p>
+                        <input 
+                            name="others" 
+                            type="url" 
+                            className="w-full rounded-lg text-[#101818] dark:text-white focus:outline-0 focus:ring-1 focus:ring-primary border border-[#dae5e7] dark:border-primary/20 bg-background-light dark:bg-background-dark/40 h-12 placeholder:text-[#dae5e7] p-4 text-base font-normal" 
+                            placeholder="https://yourwebsite.com" 
+                            value={formData.others} 
+                            onChange={handleChange}
+                        />
+                    </label>
+
+                    <label className="flex flex-col w-full">
+                        <p className="text-[#5e888d] dark:text-[#a0c4c8] text-[11px] font-bold uppercase tracking-wider pb-2">Bio (Optional)</p>
+                        <textarea 
+                            name="bio"
+                            className="w-full rounded-lg text-[#101818] dark:text-white focus:outline-0 focus:ring-1 focus:ring-primary border border-[#dae5e7] dark:border-primary/20 bg-background-light dark:bg-background-dark/40 h-24 placeholder:text-[#dae5e7] p-4 text-base font-normal resize-none" 
+                            placeholder="A short bio about yourself..." 
+                            value={formData.bio} 
                             onChange={handleChange}
                         />
                     </label>

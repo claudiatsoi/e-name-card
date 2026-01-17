@@ -125,7 +125,7 @@ export default async function UserCard({ params }) {
                     variant="card"
                     title={`${name} - ${title}`} 
                     text={`Here's ${name} business card!`} 
-                    url={`https://e-name-card-hazel.claunode.com/user/${id}`} 
+                    url={`https://name-card.claunode.com/user/${id}`} 
                     cardTitle="Share"
                     cardSubtitle="Via QR or Link"
                 />
