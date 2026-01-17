@@ -71,13 +71,13 @@ export default async function InternalSalesCard({ params }) {
                         </div>
                     </a>
                     
-                    <div className="flex w-full flex-col items-start justify-center gap-6 pl-8 pr-3 py-8 min-h-[200px]">
-                        <div className="flex w-full justify-between items-stretch gap-4">
+                    <div className="flex w-full flex-col items-start justify-center gap-6 px-6 py-8 min-h-[200px]">
+                        <div className="flex w-full justify-between items-stretch gap-2">
                             <div className="flex-1">
                                 <div>
-                                    <h1 className="text-[#121517] text-3xl font-extrabold leading-tight tracking-[-0.02em]">{name}</h1>
-                                    <p className="text-primary text-lg font-medium mt-1">{title}</p>
-                                    <p className="text-[#657b86] text-base font-normal mt-1">{company}</p>
+                                    <h1 className="text-[#121517] text-2xl font-extrabold leading-tight tracking-[-0.02em] break-words pr-2">{name}</h1>
+                                    <p className="text-primary text-base font-medium mt-1">{title}</p>
+                                    <p className="text-[#657b86] text-sm font-normal mt-1">{company}</p>
                                 </div>
                             </div>
                             <div className="flex flex-col items-end justify-between gap-3 shrink-0">
