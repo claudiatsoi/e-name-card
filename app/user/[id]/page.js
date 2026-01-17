@@ -5,6 +5,7 @@ import Image from 'next/image';
 import SaveContactButton from '@/app/components/SaveContactButton';
 import WriteNFCButton from '@/app/components/WriteNFCButton';
 import ShareButton from '@/app/components/ShareButton';
+import AddToHomeScreenButton from '@/app/components/AddToHomeScreenButton';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
@@ -138,11 +139,11 @@ export default async function UserCard({ params }) {
                 title={title}
                 company={company}
                 phone={fullPhone}
-                email={email}
-                // Save Contact: Red, Phonebook Icon will be in component if default, or via children?
-                // The component does NOT accept children or custom icon prop currently.
-                // We will change the component to accept classes and render the red style + phonebook icon.
-                // Passing red class here:
+                className="bg-red-600 border border-red-600 text-white rounded-xl flex flex-col items-center justify-center py-4 gap-2 shadow-sm active:scale-95 transition-all text-xs font-bold hover:bg-red-700"
+            />
+            
+            <AddToHomeScreenButton 
+                className="bg-purple-600 border border-purple-600 text-white rounded-xl flex flex-col items-center justify-center py-4 gap-2 shadow-sm active:scale-95 transition-all text-xs font-bold hover:bg-purple
                 className="col-span-2 bg-red-600 border border-red-600 text-white rounded-xl flex flex-col items-center justify-center py-4 gap-2 shadow-sm active:scale-95 transition-all text-xs font-bold hover:bg-red-700"
             />
 
