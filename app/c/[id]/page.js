@@ -72,7 +72,7 @@ export default async function InternalSalesCard({ params }) {
                     </a>
                     
                     <div className="flex w-full flex-col items-start justify-center gap-6 p-8 min-h-[200px]">
-                        <div className="flex w-full justify-between items-start gap-4">
+                        <div className="flex w-full justify-between items-stretch gap-4">
                             <div className="flex-1">
                                 <div>
                                     <h1 className="text-[#121517] text-3xl font-extrabold leading-tight tracking-[-0.02em]">{name}</h1>
@@ -80,7 +80,7 @@ export default async function InternalSalesCard({ params }) {
                                     <p className="text-[#657b86] text-base font-normal mt-1">{company}</p>
                                 </div>
                             </div>
-                            <div className="flex flex-col items-center gap-3 shrink-0">
+                            <div className="flex flex-col items-center justify-between gap-3 shrink-0">
                                 <div className="p-1 bg-white">
                                     <QRCodeSVG 
                                         value={`https://name-card.claunode.com/c/${id}`}
@@ -89,22 +89,19 @@ export default async function InternalSalesCard({ params }) {
                                         fgColor="#121517"
                                     />
                                 </div>
+                                {avatar && (
+                                    <div className="relative w-24 h-24 rounded-full overflow-hidden border-4 border-white shadow-lg mt-auto">
+                                        <Image 
+                                            src={avatar}
+                                            alt={name}
+                                            fill
+                                            className="object-cover"
+                                            unoptimized
+                                        />
+                                    </div>
+                                )}
                             </div>
                         </div>
-
-                        {avatar && (
-                            <div className="flex w-full justify-end -mt-2 mb-2">
-                                <div className="relative w-24 h-24 rounded-full overflow-hidden border-4 border-white shadow-lg">
-                                    <Image 
-                                        src={avatar}
-                                        alt={name}
-                                        fill
-                                        className="object-cover"
-                                        unoptimized
-                                    />
-                                </div>
-                            </div>
-                        )}
                         
                         <div className="w-full space-y-3 pt-4 border-t border-gray-100 flex-1">
                             <div className="flex items-center gap-3">
