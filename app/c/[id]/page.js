@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { getSheet } from '@/lib/googleSheet';
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
+import { QRCodeSVG } from 'qrcode.react';
 import SaveContactButton from '@/app/components/SaveContactButton';
 import WriteNFCButton from '@/app/components/WriteNFCButton';
 import ShareButton from '@/app/components/ShareButton';
@@ -36,6 +37,7 @@ export default async function InternalSalesCard({ params }) {
   const linkedin = get('linkedin') || get('LinkedIn URL') || '';
   const areaCode = String(get('area_code') || get('Area Code') || get('Area_Code') || '').trim();
   const isWhatsapp = String(get('is_whatsapp') || get('Is Whatsapp') || '').trim().toLowerCase() === 'true';
+  const avatar = get('avatar') || get('Avatar') || '';
 
   const fullPhone = areaCode ? `${areaCode}${phone}` : phone;
   const whatsappUrl = isWhatsapp ? `https://wa.me/${fullPhone.replace(/[^0-9]/g,'')}` : '';
@@ -70,10 +72,35 @@ export default async function InternalSalesCard({ params }) {
                     </a>
                     
                     <div className="flex w-full flex-col items-start justify-center gap-6 p-8 min-h-[200px]">
-                        <div>
-                            <h1 className="text-[#121517] text-3xl font-extrabold leading-tight tracking-[-0.02em]">{name}</h1>
-                            <p className="text-primary text-lg font-medium mt-1">{title}</p>
-                            <p className="text-[#657b86] text-base font-normal">{company}</p>
+                        <div className="flex w-full justify-between items-start gap-4">
+                            <div className="flex-1">
+                                <div className="flex items-center gap-4 mb-2">
+                                     {avatar && (
+                                        <div className="relative w-16 h-16 rounded-full overflow-hidden border-2 border-primary/10 shrink-0">
+                                            <Image 
+                                                src={avatar}
+                                                alt={name}
+                                                fill
+                                                className="object-cover"
+                                                unoptimized
+                                            />
+                                        </div>
+                                     )}
+                                     <div>
+                                        <h1 className="text-[#121517] text-3xl font-extrabold leading-tight tracking-[-0.02em]">{name}</h1>
+                                        <p className="text-primary text-lg font-medium mt-1">{title}</p>
+                                     </div>
+                                </div>
+                                <p className="text-[#657b86] text-base font-normal">{company}</p>
+                            </div>
+                            <div className="shrink-0 p-1 bg-white">
+                                <QRCodeSVG 
+                                    value={`https://name-card.claunode.com/c/${id}`}
+                                    size={48}
+                                    level="L"
+                                    fgColor="#121517"
+                                />
+                            </div>
                         </div>
                         
                         <div className="w-full space-y-3 pt-4 border-t border-gray-100 flex-1">

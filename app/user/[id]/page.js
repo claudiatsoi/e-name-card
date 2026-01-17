@@ -39,6 +39,7 @@ export default async function UserCard({ params }) {
   const linkedin = get('linkedin') || get('LinkedIn') || '';
   const others = get('others') || get('Others') || get('others_url') || '';
   const bio = get('bio') || get('Bio') || '';
+  const avatar = get('avatar') || get('Avatar') || '';
 
   const fullPhone = areaCode ? `${areaCode}${phone}` : phone;
   const whatsappUrl = isWhatsapp ? `https://wa.me/${fullPhone.replace(/[^0-9]/g,'')}` : '';
@@ -74,9 +75,24 @@ export default async function UserCard({ params }) {
                     
                     <div className="flex w-full flex-col items-start justify-center gap-6 p-8 min-h-[200px]">
                         <div className="flex w-full justify-between items-start gap-4">
-                            <div>
-                                <h1 className="text-[#121517] text-3xl font-extrabold leading-tight tracking-[-0.02em]">{name}</h1>
-                                <p className="text-primary text-lg font-medium mt-1">{title}</p>
+                            <div className="flex-1">
+                                <div className="flex items-center gap-4 mb-2">
+                                     {avatar && (
+                                        <div className="relative w-16 h-16 rounded-full overflow-hidden border-2 border-primary/10 shrink-0">
+                                            <Image 
+                                                src={avatar}
+                                                alt={name}
+                                                fill
+                                                className="object-cover"
+                                                unoptimized
+                                            />
+                                        </div>
+                                     )}
+                                     <div>
+                                        <h1 className="text-[#121517] text-3xl font-extrabold leading-tight tracking-[-0.02em]">{name}</h1>
+                                        <p className="text-primary text-lg font-medium mt-1">{title}</p>
+                                     </div>
+                                </div>
                                 <p className="text-[#657b86] text-base font-normal">{company}</p>
                             </div>
                             <div className="shrink-0 p-1 bg-white">

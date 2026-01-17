@@ -32,13 +32,42 @@ function CreateCardContent() {
     linkedin: '',
     others: '',
     bio: '',
+    avatar: '',
   });
   const [status, setStatus] = useState('idle'); // idle, loading, success, error
+  const [uploading, setUploading] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
 
   const handleChange = (e) => {
     const value = e.target.type === 'checkbox' ? e.target.checked : e.target.value;
     setFormData({ ...formData, [e.target.name]: value });
+  };
+
+  const handleImageUpload = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    setUploading(true);
+    const data = new FormData();
+    data.append('file', file);
+    data.append('upload_preset', 'e-name-card');
+    data.append('cloud_name', 'du9br1qnu');
+
+    try {
+      const res = await fetch('https://api.cloudinary.com/v1_1/du9br1qnu/image/upload', {
+        method: 'POST',
+        body: data,
+      });
+      const image = await res.json();
+      if (image.secure_url) {
+        setFormData(prev => ({ ...prev, avatar: image.secure_url }));
+      }
+    } catch (err) {
+      console.error('Upload failed', err);
+      setErrorMsg('Failed to upload image');
+    } finally {
+      setUploading(false);
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -128,6 +157,29 @@ function CreateCardContent() {
                             value={formData.name} 
                             onChange={handleChange}
                         />
+                    </label>
+
+                    <label className="flex flex-col w-full mt-4">
+                        <p className="text-[#5e888d] dark:text-[#a0c4c8] text-[11px] font-bold uppercase tracking-wider pb-2">Profile Picture (Optional)</p>
+                        <div className="flex items-center gap-4">
+                            {formData.avatar && (
+                                <div className="relative w-12 h-12 rounded-full overflow-hidden border border-[#dae5e7]">
+                                    <Image src={formData.avatar} alt="Preview" fill className="object-cover" />
+                                </div>
+                            )}
+                            <label className={`flex items-center justify-center h-12 px-4 rounded-lg border border-[#dae5e7] dark:border-primary/20 bg-background-light dark:bg-background-dark/40 cursor-pointer hover:bg-black/5 transition-colors ${uploading ? 'opacity-50 cursor-not-allowed' : ''}`}>
+                                <span className="text-[#101818] dark:text-white text-sm font-medium">
+                                    {uploading ? 'Uploading...' : 'Upload Photo'}
+                                </span>
+                                <input 
+                                    type="file" 
+                                    accept="image/*"
+                                    className="hidden"
+                                    disabled={uploading}
+                                    onChange={handleImageUpload}
+                                />
+                            </label>
+                        </div>
                     </label>
                 </div>
             </div>
