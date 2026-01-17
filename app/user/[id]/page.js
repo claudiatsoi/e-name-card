@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { getSheet } from '@/lib/googleSheet';
 import { notFound } from 'next/navigation';
+import Image from 'next/image';
 import SaveContactButton from '@/app/components/SaveContactButton';
 import WriteNFCButton from '@/app/components/WriteNFCButton';
 import ShareButton from '@/app/components/ShareButton';
