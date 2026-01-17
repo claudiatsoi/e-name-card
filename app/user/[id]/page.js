@@ -143,7 +143,7 @@ export default async function UserCard({ params }) {
             </div>
 
             <div className="mt-6 w-full px-2">
-                <Link href="/create" className="w-full flex cursor-pointer items-center justify-center gap-2 overflow-hidden rounded-lg h-12 px-6 bg-primary text-white text-base font-bold transition-transform active:scale-95 shadow-lg shadow-primary/20 hover:bg-[#144f6d]">
+                <Link href={`/create?ref=${id}`} className="w-full flex cursor-pointer items-center justify-center gap-2 overflow-hidden rounded-lg h-12 px-6 bg-primary text-white text-base font-bold transition-transform active:scale-95 shadow-lg shadow-primary/20 hover:bg-[#144f6d]">
                     <span>Create Your Own</span>
                     <span className="material-symbols-outlined text-lg">arrow_forward</span>
                 </Link>
