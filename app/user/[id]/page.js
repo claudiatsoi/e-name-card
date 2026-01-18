@@ -164,7 +164,14 @@ export default async function UserCard({ params }) {
                 </div>
             </div>
 
-            <div className="mt-6 w-full px-2">
+            <div className="mt-4 w-full flex justify-center">
+                 <Link href={`/user/${id}/edit`} className="text-primary/70 dark:text-white/50 text-[10px] font-bold uppercase tracking-widest hover:text-primary hover:underline transition-colors flex items-center gap-1.5 py-2">
+                    <span className="material-symbols-outlined text-[14px]">edit_square</span>
+                    Edit this card
+                 </Link>
+            </div>
+
+            <div className="mt-2 w-full px-2">
                 <Link href={`/create?ref=${id}`} className="w-full flex cursor-pointer items-center justify-center gap-2 overflow-hidden rounded-lg h-12 px-6 bg-primary text-white text-base font-bold transition-transform active:scale-95 shadow-lg shadow-primary/20 hover:bg-[#144f6d]">
                     <span>Create Your Own</span>
                     <span className="material-symbols-outlined text-lg">arrow_forward</span>
