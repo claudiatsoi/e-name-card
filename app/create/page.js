@@ -37,10 +37,42 @@ function CreateCardContent() {
   const [status, setStatus] = useState('idle'); // idle, loading, success, error
   const [uploading, setUploading] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
+  const [fieldErrors, setFieldErrors] = useState({});
+
+  const validateForm = () => {
+    const errors = {};
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const urlRegex = /^https?:\/\/.+/i;
+
+    if (!formData.name.trim()) errors.name = 'Full Name is required';
+    if (!formData.title.trim()) errors.title = 'Job Title is required';
+    if (!formData.company.trim()) errors.company = 'Company Name is required';
+    if (!formData.phone.trim()) errors.phone = 'Phone Number is required';
+    
+    if (!formData.email.trim()) {
+        errors.email = 'Email Address is required';
+    } else if (!emailRegex.test(formData.email)) {
+        errors.email = 'Please enter a valid email address';
+    }
+
+    if (formData.linkedin && !urlRegex.test(formData.linkedin)) {
+        errors.linkedin = 'URL must start with http:// or https://';
+    }
+    
+    if (formData.others && !urlRegex.test(formData.others)) {
+        errors.others = 'URL must start with http:// or https://';
+    }
+
+    return errors;
+  };
 
   const handleChange = (e) => {
     const value = e.target.type === 'checkbox' ? e.target.checked : e.target.value;
     setFormData({ ...formData, [e.target.name]: value });
+    // Clear error when user types
+    if (fieldErrors[e.target.name]) {
+        setFieldErrors(prev => ({ ...prev, [e.target.name]: null }));
+    }
   };
 
   const handleImageUpload = async (e) => {
@@ -78,6 +110,21 @@ function CreateCardContent() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
+    // Validate Form
+    const errors = validateForm();
+    if (Object.keys(errors).length > 0) {
+        setFieldErrors(errors);
+        // Scroll to first error
+        const firstErrorKey = Object.keys(errors)[0];
+        const element = document.getElementsByName(firstErrorKey)[0];
+        if (element) {
+            element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            element.focus();
+        }
+        return;
+    }
+
     setStatus('loading');
     setErrorMsg('');
 
@@ -158,11 +205,12 @@ function CreateCardContent() {
                             name="name" 
                             type="text" 
                             required 
-                            className="w-full rounded-lg text-[#101818] dark:text-white focus:outline-0 focus:ring-1 focus:ring-primary border border-[#dae5e7] dark:border-primary/20 bg-background-light dark:bg-background-dark/40 h-12 placeholder:text-[#dae5e7] p-4 text-base font-normal transition-colors" 
+                            className={`w-full rounded-lg text-[#101818] dark:text-white focus:outline-0 focus:ring-1 focus:ring-primary border ${fieldErrors.name ? 'border-red-500 focus:ring-red-500' : 'border-[#dae5e7] dark:border-primary/20'} bg-background-light dark:bg-background-dark/40 h-12 placeholder:text-[#dae5e7] p-4 text-base font-normal transition-colors`}
                             placeholder="e.g. Alex Rivera" 
                             value={formData.name} 
                             onChange={handleChange}
                         />
+                        {fieldErrors.name && <p className="text-red-500 text-xs mt-1 font-medium animate-pulse">{fieldErrors.name}</p>}
                     </label>
 
                     <label className="flex flex-col w-full mt-4">
@@ -200,11 +248,12 @@ function CreateCardContent() {
                             name="title" 
                             type="text" 
                             required 
-                            className="w-full rounded-lg text-[#101818] dark:text-white focus:outline-0 focus:ring-1 focus:ring-primary border border-[#dae5e7] dark:border-primary/20 bg-background-light dark:bg-background-dark/40 h-12 placeholder:text-[#dae5e7] p-4 text-base font-normal" 
+                            className={`w-full rounded-lg text-[#101818] dark:text-white focus:outline-0 focus:ring-1 focus:ring-primary border ${fieldErrors.title ? 'border-red-500 focus:ring-red-500' : 'border-[#dae5e7] dark:border-primary/20'} bg-background-light dark:bg-background-dark/40 h-12 placeholder:text-[#dae5e7] p-4 text-base font-normal`}
                             placeholder="e.g. Designer" 
                             value={formData.title} 
                             onChange={handleChange}
                         />
+                         {fieldErrors.title && <p className="text-red-500 text-xs mt-1 font-medium animate-pulse">{fieldErrors.title}</p>}
                     </label>
                     <label className="flex flex-col flex-1 mt-4 sm:mt-0">
                         <p className="text-[#5e888d] dark:text-[#a0c4c8] text-[11px] font-bold uppercase tracking-wider pb-2">Company</p>
@@ -212,11 +261,12 @@ function CreateCardContent() {
                             name="company" 
                             type="text" 
                             required 
-                            className="w-full rounded-lg text-[#101818] dark:text-white focus:outline-0 focus:ring-1 focus:ring-primary border border-[#dae5e7] dark:border-primary/20 bg-background-light dark:bg-background-dark/40 h-12 placeholder:text-[#dae5e7] p-4 text-base font-normal" 
+                            className={`w-full rounded-lg text-[#101818] dark:text-white focus:outline-0 focus:ring-1 focus:ring-primary border ${fieldErrors.company ? 'border-red-500 focus:ring-red-500' : 'border-[#dae5e7] dark:border-primary/20'} bg-background-light dark:bg-background-dark/40 h-12 placeholder:text-[#dae5e7] p-4 text-base font-normal`}
                             placeholder="Company Name" 
                             value={formData.company} 
                             onChange={handleChange}
                         />
+                         {fieldErrors.company && <p className="text-red-500 text-xs mt-1 font-medium animate-pulse">{fieldErrors.company}</p>}
                     </label>
                 </div>
             </div>
@@ -245,12 +295,13 @@ function CreateCardContent() {
                                 name="phone" 
                                 type="tel" 
                                 required 
-                                className="flex-1 rounded-lg text-[#101818] dark:text-white focus:outline-0 focus:ring-1 focus:ring-primary border border-[#dae5e7] dark:border-primary/20 bg-background-light dark:bg-background-dark/40 h-12 placeholder:text-[#dae5e7] p-4 text-base font-normal" 
+                                className={`flex-1 rounded-lg text-[#101818] dark:text-white focus:outline-0 focus:ring-1 focus:ring-primary border ${fieldErrors.phone ? 'border-red-500 focus:ring-red-500' : 'border-[#dae5e7] dark:border-primary/20'} bg-background-light dark:bg-background-dark/40 h-12 placeholder:text-[#dae5e7] p-4 text-base font-normal`}
                                 placeholder="Phone Number" 
                                 value={formData.phone} 
                                 onChange={handleChange}
                              />
                          </div>
+                         {fieldErrors.phone && <p className="text-red-500 text-xs mt-1 font-medium animate-pulse">{fieldErrors.phone}</p>}
                     </label>
                     
                     <label className="flex items-center gap-2">
@@ -271,11 +322,12 @@ function CreateCardContent() {
                             name="email" 
                             type="email" 
                             required 
-                            className="w-full rounded-lg text-[#101818] dark:text-white focus:outline-0 focus:ring-1 focus:ring-primary border border-[#dae5e7] dark:border-primary/20 bg-background-light dark:bg-background-dark/40 h-12 placeholder:text-[#dae5e7] p-4 text-base font-normal" 
+                            className={`w-full rounded-lg text-[#101818] dark:text-white focus:outline-0 focus:ring-1 focus:ring-primary border ${fieldErrors.email ? 'border-red-500 focus:ring-red-500' : 'border-[#dae5e7] dark:border-primary/20'} bg-background-light dark:bg-background-dark/40 h-12 placeholder:text-[#dae5e7] p-4 text-base font-normal`}
                             placeholder="Email Address" 
                             value={formData.email} 
                             onChange={handleChange}
                         />
+                         {fieldErrors.email && <p className="text-red-500 text-xs mt-1 font-medium animate-pulse">{fieldErrors.email}</p>}
                     </label>
 
                     <label className="flex flex-col w-full">
@@ -283,11 +335,12 @@ function CreateCardContent() {
                         <input 
                             name="linkedin" 
                             type="url" 
-                            className="w-full rounded-lg text-[#101818] dark:text-white focus:outline-0 focus:ring-1 focus:ring-primary border border-[#dae5e7] dark:border-primary/20 bg-background-light dark:bg-background-dark/40 h-12 placeholder:text-[#dae5e7] p-4 text-base font-normal" 
+                            className={`w-full rounded-lg text-[#101818] dark:text-white focus:outline-0 focus:ring-1 focus:ring-primary border ${fieldErrors.linkedin ? 'border-red-500 focus:ring-red-500' : 'border-[#dae5e7] dark:border-primary/20'} bg-background-light dark:bg-background-dark/40 h-12 placeholder:text-[#dae5e7] p-4 text-base font-normal`}
                             placeholder="https://linkedin.com/in/..." 
                             value={formData.linkedin} 
                             onChange={handleChange}
                         />
+                         {fieldErrors.linkedin && <p className="text-red-500 text-xs mt-1 font-medium animate-pulse">{fieldErrors.linkedin}</p>}
                     </label>
 
                     <label className="flex flex-col w-full">
@@ -295,11 +348,12 @@ function CreateCardContent() {
                         <input 
                             name="others" 
                             type="url" 
-                            className="w-full rounded-lg text-[#101818] dark:text-white focus:outline-0 focus:ring-1 focus:ring-primary border border-[#dae5e7] dark:border-primary/20 bg-background-light dark:bg-background-dark/40 h-12 placeholder:text-[#dae5e7] p-4 text-base font-normal" 
+                            className={`w-full rounded-lg text-[#101818] dark:text-white focus:outline-0 focus:ring-1 focus:ring-primary border ${fieldErrors.others ? 'border-red-500 focus:ring-red-500' : 'border-[#dae5e7] dark:border-primary/20'} bg-background-light dark:bg-background-dark/40 h-12 placeholder:text-[#dae5e7] p-4 text-base font-normal`}
                             placeholder="https://yourwebsite.com" 
                             value={formData.others} 
                             onChange={handleChange}
                         />
+                        {fieldErrors.others && <p className="text-red-500 text-xs mt-1 font-medium animate-pulse">{fieldErrors.others}</p>}
                     </label>
 
                     <label className="flex flex-col w-full">
