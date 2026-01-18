@@ -47,6 +47,12 @@ function CreateCardContent() {
     const file = e.target.files[0];
     if (!file) return;
 
+    // Client-side file size validation (Limit: 5MB)
+    if (file.size > 5 * 1024 * 1024) {
+        alert("File size too large! Please upload an image smaller than 5MB.");
+        return;
+    }
+
     setUploading(true);
     const data = new FormData();
     data.append('file', file);
