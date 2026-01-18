@@ -22,7 +22,7 @@ export async function POST(request) {
     rateLimit.set(ip, now);
 
     const body = await request.json();
-    const { name, title, company, area_code, phone, is_whatsapp, email, linkedin, others, bio, avatar, password } = body;
+    const { name, title, company, area_code, phone, is_whatsapp, email, linkedin, booking_url, others, bio, avatar, password } = body;
     
     // Debug Auth
     console.log("Auth Email being used:", process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL);
@@ -67,6 +67,7 @@ export async function POST(request) {
         'is_whatsapp': is_whatsapp ? 'TRUE' : 'FALSE',
         'email': email,
         'linkedin': linkedin || '',
+        'meeting_link': booking_url || '',
         'others': others || '',
         'bio': bio || '',
         'avatar': avatar || '',

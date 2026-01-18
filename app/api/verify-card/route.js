@@ -41,6 +41,7 @@ export async function POST(request) {
         is_whatsapp: String(get('is_whatsapp')).toUpperCase() === 'TRUE',
         email: get('email'),
         linkedin: get('linkedin'),
+        booking_url: get('meeting_link') || get('booking_url'),
         others: get('others'),
         bio: get('bio'),
         avatar: get('avatar'),

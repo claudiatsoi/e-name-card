@@ -37,12 +37,26 @@ export default async function UserCard({ params }) {
   const areaCode = String(get('area_code') || get('Area Code') || get('Area_Code') || '').trim();
   const isWhatsapp = String(get('is_whatsapp') || get('Is Whatsapp') || '').trim().toLowerCase() === 'true';
   const linkedin = get('linkedin') || get('LinkedIn') || '';
+  const bookingUrl = get('meeting_link') || get('Meeting Link') || get('booking_url') || get('Booking URL') || '';
   const others = get('others') || get('Others') || get('others_url') || '';
   const bio = get('bio') || get('Bio') || '';
   const avatar = get('avatar') || get('Avatar') || '';
 
   const fullPhone = areaCode ? `${areaCode}${phone}` : phone;
   const whatsappUrl = isWhatsapp ? `https://wa.me/${fullPhone.replace(/[^0-9]/g,'')}` : '';
+
+  // Helper to parse bio for links
+  const renderBio = (text) => {
+    if (!text) return null;
+    const urlRegex = /(https?:\/\/[^\s]+)/g;
+    const parts = text.split(urlRegex);
+    return parts.map((part, index) => {
+        if (part.match(urlRegex)) {
+            return <a key={index} href={part} target="_blank" rel="noopener noreferrer" className="text-primary hover:underline font-medium">{part}</a>;
+        }
+        return part;
+    });
+  };
 
   return (
     <div className="min-h-screen bg-background-light dark:bg-background-dark font-display text-[#121517] dark:text-white transition-colors duration-300">
@@ -114,7 +128,7 @@ export default async function UserCard({ params }) {
                         {bio && (
                             <div className="w-full">
                                 <p className="text-[#657b86] text-sm leading-relaxed whitespace-pre-wrap italic">
-                                    "{bio}"
+                                    "{renderBio(bio)}"
                                 </p>
                             </div>
                         )}
@@ -127,7 +141,7 @@ export default async function UserCard({ params }) {
                             {isWhatsapp && (
                                 <div className="flex items-center gap-3">
                                     <span className="material-symbols-outlined text-green-600 text-xl">chat</span>
-                                    <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" className="text-green-600 font-bold underline decoration-green-600/30 hover:decoration-green-600 text-sm">WhatsApp Chat</a>
+                                    <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" className="text-green-600 font-bold underline decoration-green-600/30 hover:decoration-green-600 text-sm animate-pulse-slow">Chat on WhatsApp Now</a>
                                 </div>
                             )}
                             <div className="flex items-center gap-3">
@@ -138,6 +152,12 @@ export default async function UserCard({ params }) {
                                 <div className="flex items-center gap-3">
                                     <span className="material-symbols-outlined text-primary text-xl">social_leaderboard</span>
                                     <a href={linkedin} target="_blank" rel="noopener noreferrer" className="text-[#121517] text-sm font-medium hover:text-primary break-all">{linkedin.replace(/^https?:\/\//, '')}</a>
+                                </div>
+                            )}
+                            {bookingUrl && (
+                                <div className="flex items-center gap-3">
+                                    <span className="material-symbols-outlined text-primary text-xl">calendar_month</span>
+                                    <a href={bookingUrl} target="_blank" rel="noopener noreferrer" className="text-[#121517] text-sm font-medium hover:text-primary truncate max-w-[200px] font-bold">Book a Meeting</a>
                                 </div>
                             )}
                             {others && (

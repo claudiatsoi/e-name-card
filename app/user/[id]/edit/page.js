@@ -35,6 +35,7 @@ function EditCardContent() {
     is_whatsapp: false,
     email: '',
     linkedin: '',
+    booking_url: '',
     others: '',
     bio: '',
     avatar: '',
@@ -119,6 +120,10 @@ function EditCardContent() {
 
     if (formData.linkedin && !urlRegex.test(formData.linkedin)) {
         errors.linkedin = 'URL must start with http:// or https://';
+    }
+
+    if (formData.booking_url && !urlRegex.test(formData.booking_url)) {
+        errors.booking_url = 'URL must start with http:// or https://';
     }
     
     if (formData.others && !urlRegex.test(formData.others)) {
@@ -394,6 +399,18 @@ function EditCardContent() {
                             onChange={handleChange}
                         />
                          {fieldErrors.linkedin && <p className="text-red-500 text-xs mt-1 font-medium animate-pulse">{fieldErrors.linkedin}</p>}
+                    </label>
+
+                    <label className="flex flex-col w-full">
+                        <p className="text-[#5e888d] dark:text-[#a0c4c8] text-[11px] font-bold uppercase tracking-wider pb-2">Booking / Meeting URL (Optional)</p>
+                        <input 
+                            name="booking_url" 
+                            type="url" 
+                             className={`w-full rounded-lg text-[#101818] dark:text-white focus:outline-0 focus:ring-1 focus:ring-primary border ${fieldErrors.booking_url ? 'border-red-500 focus:ring-red-500' : 'border-[#dae5e7] dark:border-primary/20'} bg-background-light dark:bg-background-dark/40 h-12 placeholder:text-[#dae5e7] p-4 text-base font-normal`}
+                            value={formData.booking_url} 
+                            onChange={handleChange}
+                        />
+                         {fieldErrors.booking_url && <p className="text-red-500 text-xs mt-1 font-medium animate-pulse">{fieldErrors.booking_url}</p>}
                     </label>
 
                     <label className="flex flex-col w-full">
