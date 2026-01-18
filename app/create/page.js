@@ -66,11 +66,11 @@ function CreateCardContent() {
     if (formData.linkedin && !urlRegex.test(formData.linkedin)) {
         errors.linkedin = 'URL must start with http:// or https://';
     }
-    booking_url && !urlRegex.test(formData.booking_url)) {
+    
+    if (formData.booking_url && !urlRegex.test(formData.booking_url)) {
         errors.booking_url = 'URL must start with http:// or https://';
     }
     
-    if (formData.
     if (formData.others && !urlRegex.test(formData.others)) {
         errors.others = 'URL must start with http:// or https://';
     }
