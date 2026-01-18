@@ -22,12 +22,12 @@ export async function POST(request) {
     rateLimit.set(ip, now);
 
     const body = await request.json();
-    const { name, title, company, area_code, phone, is_whatsapp, email, linkedin, others, bio, avatar } = body;
+    const { name, title, company, area_code, phone, is_whatsapp, email, linkedin, others, bio, avatar, password } = body;
     
     // Debug Auth
     console.log("Auth Email being used:", process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL);
 
-    if (!name || !title || !company || !phone || !email) {
+    if (!name || !title || !company || !phone || !email || !password) {
        return NextResponse.json({ error: 'Missing fields' }, { status: 400 });
     }
 
@@ -70,6 +70,7 @@ export async function POST(request) {
         'others': others || '',
         'bio': bio || '',
         'avatar': avatar || '',
+        'password': password,
         'created_at': created_at,
         'referred_by': referred_by
     };

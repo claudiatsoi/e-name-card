@@ -220,6 +220,9 @@ export default async function UserCard({ params }) {
                     <p className="text-[#657b86] dark:text-white/40 text-[10px] font-bold uppercase tracking-[0.2em] px-4 text-center">
                         Powered by Claudia Tsoi
                     </p>
+                    <p className="text-[#657b86]/40 dark:text-white/20 text-[8px] font-mono mt-1">
+                        ID: {id}
+                    </p>
                 </div>
             </footer>
          </main>

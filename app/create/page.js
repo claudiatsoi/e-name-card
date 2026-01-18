@@ -33,6 +33,7 @@ function CreateCardContent() {
     others: '',
     bio: '',
     avatar: '',
+    password: '',
   });
   const [status, setStatus] = useState('idle'); // idle, loading, success, error
   const [uploading, setUploading] = useState(false);
@@ -48,6 +49,7 @@ function CreateCardContent() {
     if (!formData.title.trim()) errors.title = 'Job Title is required';
     if (!formData.company.trim()) errors.company = 'Company Name is required';
     if (!formData.phone.trim()) errors.phone = 'Phone Number is required';
+    if (!formData.password.trim()) errors.password = 'Password is required to edit later';
     
     if (!formData.email.trim()) {
         errors.email = 'Email Address is required';
@@ -197,8 +199,23 @@ function CreateCardContent() {
         <form onSubmit={handleSubmit} className="flex-1 space-y-2">
             {/* IDENTITY Section */}
             <div className="bg-white dark:bg-white/5 py-4">
-                <h3 className="text-[#101818] dark:text-white text-xs font-black leading-tight tracking-[0.15em] px-6 py-4 uppercase">Identity</h3>
+                <h3 className="text-[#101818] dark:text-white text-xs font-black leading-tight tracking-[0.15em] px-6 py-4 uppercase">Identity & Security</h3>
                 <div className="px-6 py-2">
+                    <label className="flex flex-col w-full mb-4">
+                         <p className="text-[#5e888d] dark:text-[#a0c4c8] text-[11px] font-bold uppercase tracking-wider pb-2">Edit Password / PIN</p>
+                         <p className="text-[10px] text-[#657b86] dark:text-[#a0c4c8]/70 mb-2">You will need this to edit your card later.</p>
+                         <input 
+                            name="password" 
+                            type="text" 
+                            required 
+                            className={`w-full rounded-lg text-[#101818] dark:text-white focus:outline-0 focus:ring-1 focus:ring-primary border ${fieldErrors.password ? 'border-red-500 focus:ring-red-500' : 'border-[#dae5e7] dark:border-primary/20'} bg-background-light dark:bg-background-dark/40 h-12 placeholder:text-[#dae5e7] p-4 text-base font-normal transition-colors`}
+                            placeholder="e.g. 1234 or MySecretPass" 
+                            value={formData.password} 
+                            onChange={handleChange}
+                        />
+                        {fieldErrors.password && <p className="text-red-500 text-xs mt-1 font-medium animate-pulse">{fieldErrors.password}</p>}
+                    </label>
+
                     <label className="flex flex-col w-full">
                         <p className="text-[#5e888d] dark:text-[#a0c4c8] text-[11px] font-bold uppercase tracking-wider pb-2">Full Name</p>
                         <input 
