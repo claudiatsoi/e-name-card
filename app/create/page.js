@@ -35,10 +35,13 @@ function CreateCardContent() {
     others: '',
     bio: '',
     avatar: '',
+    logo: '',
+    logo_url: '',
     password: '',
   });
   const [status, setStatus] = useState('idle'); // idle, loading, success, error
   const [uploading, setUploading] = useState(false);
+  const [uploadingLogo, setUploadingLogo] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
   const [fieldErrors, setFieldErrors] = useState({});
 
@@ -121,6 +124,38 @@ function CreateCardContent() {
     }
   };
 
+  const handleLogoUpload = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    if (file.size > 2 * 1024 * 1024) {
+        alert("File size too large! Please upload an image smaller than 2MB.");
+        return;
+    }
+
+    setUploadingLogo(true);
+    const data = new FormData();
+    data.append('file', file);
+    data.append('upload_preset', 'e-name-card');
+    data.append('cloud_name', 'du9br1qnu');
+
+    try {
+      const res = await fetch('https://api.cloudinary.com/v1_1/du9br1qnu/image/upload', {
+        method: 'POST',
+        body: data,
+      });
+      const image = await res.json();
+      if (image.secure_url) {
+        setFormData(prev => ({ ...prev, logo: image.secure_url }));
+      }
+    } catch (err) {
+      console.error('Logo upload failed', err);
+      setErrorMsg('Failed to upload logo');
+    } finally {
+      setUploadingLogo(false);
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     
@@ -189,6 +224,11 @@ function CreateCardContent() {
             <h4 className="text-primary text-[10px] font-extrabold leading-normal tracking-[0.2em] mb-4 text-center uppercase">Live Digital Preview</h4>
             {/* Text-based Minimalist Card - Scaled Down */}
             <div className="preview-card-shadow bg-white dark:bg-white/5 border border-[#dae5e7] dark:border-primary/30 rounded p-6 min-h-[180px] flex flex-col justify-between transition-all duration-300 max-w-[90%] mx-auto relative overflow-hidden">
+                {formData.logo && (
+                    <div className="absolute top-4 right-4 pointer-events-none">
+                        <Image src={formData.logo} alt="Logo" width={52} height={26} className="object-contain max-h-[26px]" unoptimized />
+                    </div>
+                )}
                 <div className="flex flex-col gap-1">
                     <span className="text-primary text-[10px] font-bold tracking-[0.15em] uppercase mb-1">{formData.title || 'Job Title'}</span>
                     <h1 className="text-[#101818] dark:text-white text-2xl font-extrabold tracking-tighter leading-none mb-2">{formData.name || 'Your Name'}</h1>
@@ -297,6 +337,44 @@ function CreateCardContent() {
                             onChange={handleChange}
                         />
                          {fieldErrors.company && <p className="text-red-500 text-xs mt-1 font-medium animate-pulse">{fieldErrors.company}</p>}
+                    </label>
+                </div>
+
+                <div className="px-6 mt-4 space-y-4">
+                    <label className="flex flex-col w-full">
+                        <p className="text-[#5e888d] dark:text-[#a0c4c8] text-[11px] font-bold uppercase tracking-wider pb-2">Company Logo (Optional)</p>
+                        <div className="flex items-center gap-4">
+                            {formData.logo && (
+                                <div className="relative h-10 w-24 rounded overflow-hidden border border-[#dae5e7]">
+                                    <Image src={formData.logo} alt="Logo preview" fill className="object-contain" unoptimized />
+                                </div>
+                            )}
+                            <label className={`flex items-center justify-center h-12 px-4 rounded-lg border border-[#dae5e7] dark:border-primary/20 bg-background-light dark:bg-background-dark/40 cursor-pointer hover:bg-black/5 transition-colors ${uploadingLogo ? 'opacity-50 cursor-not-allowed' : ''}`}>
+                                <span className="text-[#101818] dark:text-white text-sm font-medium">
+                                    {uploadingLogo ? 'Uploading...' : 'Upload Logo'}
+                                </span>
+                                <input
+                                    type="file"
+                                    accept="image/*"
+                                    className="hidden"
+                                    disabled={uploadingLogo}
+                                    onChange={handleLogoUpload}
+                                />
+                            </label>
+                        </div>
+                    </label>
+
+                    <label className="flex flex-col w-full">
+                        <p className="text-[#5e888d] dark:text-[#a0c4c8] text-[11px] font-bold uppercase tracking-wider pb-2">Logo Link URL (Optional)</p>
+                        <input
+                            name="logo_url"
+                            type="url"
+                            className={`w-full rounded-lg text-[#101818] dark:text-white focus:outline-0 focus:ring-1 focus:ring-primary border ${fieldErrors.logo_url ? 'border-red-500 focus:ring-red-500' : 'border-[#dae5e7] dark:border-primary/20'} bg-background-light dark:bg-background-dark/40 h-12 placeholder:text-[#dae5e7] p-4 text-base font-normal`}
+                            placeholder="https://yourcompany.com"
+                            value={formData.logo_url}
+                            onChange={handleChange}
+                        />
+                        {fieldErrors.logo_url && <p className="text-red-500 text-xs mt-1 font-medium animate-pulse">{fieldErrors.logo_url}</p>}
                     </label>
                 </div>
             </div>

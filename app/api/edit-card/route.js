@@ -4,7 +4,7 @@ import { NextResponse } from 'next/server';
 export async function PUT(request) {
   try {
     const body = await request.json();
-    const { id, password, name, title, company, area_code, phone, is_whatsapp, email, linkedin, booking_url, others, bio, avatar } = body;
+    const { id, password, name, title, company, area_code, phone, is_whatsapp, email, linkedin, booking_url, others, bio, avatar, logo, logo_url } = body;
 
     if (!id || !password) {
        return NextResponse.json({ error: 'Missing ID or Password' }, { status: 400 });
@@ -60,6 +60,8 @@ export async function PUT(request) {
     if (others) set('others', others);
     if (bio) set('bio', bio);
     if (avatar) set('avatar', avatar);
+    if (logo !== undefined) set('logo', logo);
+    if (logo_url !== undefined) set('logo_url', logo_url);
 
     await row.save();
 

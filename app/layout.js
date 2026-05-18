@@ -15,11 +15,11 @@ const notoSans = Noto_Sans({
 });
 
 export const metadata = {
-  title: "Create Your Digital Name card in 5 seconds!",
+  title: "Sendit | Create and send E-Business Card in 5 Seconds | Claunode",
   description: "Make sharing easier",
   manifest: "/manifest.json",
   openGraph: {
-    title: "Create Your Digital Name card in 5 seconds!",
+    title: "Sendit | Create and send E-Business Card in 5 Seconds | Claunode",
     description: "Make sharing easier",
     images: ['/claunode_logo.png'],
   },

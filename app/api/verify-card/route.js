@@ -11,6 +11,7 @@ export async function POST(request) {
     }
 
     const sheet = await getSheet('User_Cards');
+    await sheet.loadHeaderRow();
     const rows = await sheet.getRows();
     
     // Find row with flexible ID header matching
@@ -45,6 +46,8 @@ export async function POST(request) {
         others: get('others'),
         bio: get('bio'),
         avatar: get('avatar'),
+        logo: get('logo'),
+        logo_url: get('logo_url'),
     };
 
     return NextResponse.json({ success: true, card: cardData });

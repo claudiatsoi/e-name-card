@@ -18,6 +18,7 @@ export default async function UserCard({ params, searchParams }) {
   let row;
   try {
     const sheet = await getSheet('User_Cards');
+        await sheet.loadHeaderRow();
     const rows = await sheet.getRows();
     row = rows.find(r => (r.get('id') || '') === id);
   } catch (error) {
@@ -42,6 +43,8 @@ export default async function UserCard({ params, searchParams }) {
   const others = get('others') || get('Others') || get('others_url') || '';
   const bio = get('bio') || get('Bio') || '';
   const avatar = get('avatar') || get('Avatar') || '';
+  const logo = get('logo') || get('Logo') || '';
+  const logoUrl = get('logo_url') || get('Logo URL') || get('logo url') || '';
 
   const fullPhone = areaCode ? `${areaCode}${phone}` : phone;
   const whatsappUrl = isWhatsapp ? `https://wa.me/${fullPhone.replace(/[^0-9]/g,'')}` : '';
@@ -76,6 +79,17 @@ export default async function UserCard({ params, searchParams }) {
                 <div id="user-card-visual" className="whisper-shadow flex flex-col items-stretch justify-start rounded-xl bg-white border border-gray-200 overflow-hidden">
                     
                     <div className="flex w-full flex-col items-start justify-center gap-2 px-8 py-8 min-h-[200px]">
+                        {logo && (
+                            <div className="w-full flex justify-center pb-2">
+                                {logoUrl ? (
+                                    <a href={logoUrl} target="_blank" rel="noopener noreferrer">
+                                        <Image src={logo} alt="Company Logo" width={104} height={42} className="object-contain max-h-[42px]" unoptimized />
+                                    </a>
+                                ) : (
+                                    <Image src={logo} alt="Company Logo" width={104} height={42} className="object-contain max-h-[42px]" unoptimized />
+                                )}
+                            </div>
+                        )}
                         <div className="flex w-full justify-between items-start">
                              {avatar ? (
                                 <div className="relative w-24 h-24 rounded-full overflow-hidden border-4 border-white shadow-lg">
@@ -247,6 +261,14 @@ export default async function UserCard({ params, searchParams }) {
                     <p className="text-[#657b86]/40 dark:text-white/20 text-[8px] font-mono mt-1">
                         ID: {id}
                     </p>
+                    <a
+                        href="https://wa.me/85267636730?text=Hi,Claudia!%20I%27m%20interested%20on%20this%20e-business%20card%20and%20want%20to%20know%20more!"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-[#657b86]/40 dark:text-white/20 text-[8px] font-mono hover:text-primary/60 transition-colors"
+                    >
+                        Powered by Claunode
+                    </a>
                 </div>
             </footer>
          </main>
